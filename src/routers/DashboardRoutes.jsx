@@ -1,11 +1,11 @@
 import React from 'react'
 import { Route, Routes } from 'react-router'
-import Dashboard from '../screens/Dashboard/Dashboard'
+import DashboardScreen from '../screens/DashboardScreen/DashboardScreen'
 
 const DashboardRoutes = () => {
   return (
     <Routes>
-      <Route path="*" element={<Dashboard />} />
+      <Route path="*" element={<DashboardScreen />} />
     </Routes>
   )
 }
