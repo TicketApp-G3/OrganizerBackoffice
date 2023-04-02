@@ -5,7 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 const PublicRoutes = ({ children }) => {
   const { isAuth } = useAuth()
 
-  return !isAuth ? children : <Navigate to="/" />
+  return !isAuth ? children : <Navigate to="/dashboard" />
 }
 
 export default PublicRoutes
