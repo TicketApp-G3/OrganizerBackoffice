@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './DashboardScreenStyles.css'
-import { AppShell } from '@mantine/core'
+import { AppShell, useMantineTheme } from '@mantine/core'
 import { Route, Routes } from 'react-router'
 import { useMediaQuery } from '@mantine/hooks'
 import CustomNavbar from '../../components/CustomNavbar/CustomNavbar'
@@ -13,6 +13,8 @@ const DashboardScreen = () => {
   const [openNavbar, setOpenNavbar] = useState(false)
   const mobileScreen = useMediaQuery('(max-width: 48em)')
   const [layout, setLayout] = useState('default')
+  const theme = useMantineTheme()
+  console.log(theme)
 
   useEffect(() => {
     setLayout(mobileScreen ? 'default' : 'alt')
@@ -34,6 +36,14 @@ const DashboardScreen = () => {
           handleBurguerOpened={toggleOpenNavbarStatus}
         />
       }
+      styles={{
+        main: {
+          background:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0],
+        },
+      }}
     >
       <Routes>
         <Route path="createEvent" element={<CreateEventScreen />} />
