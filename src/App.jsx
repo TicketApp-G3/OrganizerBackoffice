@@ -1,32 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '../public/vite.svg'
-import './App.css'
+import { ColorSchemeProvider, MantineProvider } from '@mantine/core'
+import { useColorScheme, useLocalStorage } from '@mantine/hooks'
+import { AuthProvider } from './contexts/AuthProvider'
+import AppRouter from './routers/AppRouter'
+import { customTheme } from './themes/customTheme'
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const preferredColorScheme = useColorScheme()
+
+  const [colorScheme, setColorScheme] = useLocalStorage(preferredColorScheme)
+
+  const toggleColorScheme = (value) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((c) => c + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <ColorSchemeProvider
+      colorScheme={colorScheme}
+      toggleColorScheme={toggleColorScheme}
+    >
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{ colorScheme, ...customTheme }}
+      >
+        <AuthProvider>
+          <AppRouter />
+        </AuthProvider>
+      </MantineProvider>
+    </ColorSchemeProvider>
   )
 }
 
