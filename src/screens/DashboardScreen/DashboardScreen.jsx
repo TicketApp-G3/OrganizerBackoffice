@@ -14,7 +14,6 @@ const DashboardScreen = () => {
   const mobileScreen = useMediaQuery('(max-width: 48em)')
   const [layout, setLayout] = useState('default')
   const theme = useMantineTheme()
-  console.log(theme)
 
   useEffect(() => {
     setLayout(mobileScreen ? 'default' : 'alt')
