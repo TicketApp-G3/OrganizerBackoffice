@@ -26,6 +26,19 @@ const CreateEventScreen = () => {
           {...form.getInputProps('title')}
         />
 
+        <Select
+          label="Tipo de evento"
+          withAsterisk
+          placeholder="Seleccione el tipo de evento"
+          {...form.getInputProps('type')}
+          data={[
+            { value: 'react', label: 'React' },
+            { value: 'ng', label: 'Angular' },
+            { value: 'svelte', label: 'Svelte' },
+            { value: 'vue', label: 'Vue' },
+          ]}
+        />
+
         <Group position="right" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
