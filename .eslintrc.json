@@ -30,6 +30,7 @@
         "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
         "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
         "arrow-parens": "off",
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "react/jsx-props-no-spreading": "off"
     }
 }

@@ -39,6 +39,11 @@ const CreateEventScreen = () => {
           ]}
         />
 
+        <CustomRichTextEditor
+          label="Descripción"
+          {...form.getInputProps('description')}
+        />
+
         <Group position="right" mt="md">
           <Button type="submit">Submit</Button>
         </Group>
