@@ -2,6 +2,7 @@ import React from 'react'
 import './CreateEventScreenStyles.css'
 import { useForm } from '@mantine/form'
 import { Button, Group, Select, TextInput } from '@mantine/core'
+import { DatePickerInput } from '@mantine/dates'
 import CustomRichTextEditor from '../../components/CustomRichTextEditor/CustomRichTextEditor'
 
 const CreateEventScreen = () => {
@@ -42,6 +43,14 @@ const CreateEventScreen = () => {
         <CustomRichTextEditor
           label="Descripción"
           {...form.getInputProps('description')}
+        />
+
+        <DatePickerInput
+          label="Fecha de inicio del evento"
+          withAsterisk
+          placeholder="Seleccione una fecha"
+          {...form.getInputProps('startDate')}
+          locale="es"
         />
 
         <Group position="right" mt="md">
