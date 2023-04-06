@@ -1,7 +1,13 @@
 import React from 'react'
-import { Input } from '@mantine/core'
+import { TextInput } from '@mantine/core'
 
-const PlacesSearchBox = ({ onChange }) => {
+const PlacesSearchBox = ({
+  label,
+  onChange,
+  withAsterisk,
+  placeholder,
+  size,
+}) => {
   const handleSearch = ({ target }) => {
     const searchBox = new window.google.maps.places.SearchBox(target)
 
@@ -18,7 +24,13 @@ const PlacesSearchBox = ({ onChange }) => {
 
   return (
     <div>
-      <Input onChange={handleSearch} />
+      <TextInput
+        withAsterisk={withAsterisk}
+        label={label}
+        placeholder={placeholder}
+        onChange={handleSearch}
+        size={size}
+      />
     </div>
   )
 }

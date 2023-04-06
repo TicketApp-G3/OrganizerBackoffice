@@ -1,11 +1,13 @@
 import React from 'react'
 import './CreateEventScreenStyles.css'
 import { useForm } from '@mantine/form'
-import { Button, Group, Select, TextInput } from '@mantine/core'
+import { Button, Flex, Group, Select, TextInput } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 
 import CustomRichTextEditor from '../../components/CustomRichTextEditor/CustomRichTextEditor'
 import PlacesSearchBox from '../../components/PlacesSearchBox/PlacesSearchBox'
+
+const INPUT_SIZE = 'md'
 
 const CreateEventScreen = () => {
   const form = useForm({
@@ -52,6 +54,15 @@ const CreateEventScreen = () => {
           label="Título"
           placeholder="Ingrese el título del evento"
           {...form.getInputProps('title')}
+          size={INPUT_SIZE}
+        />
+
+        <PlacesSearchBox
+          label="Ubicación"
+          withAsterisk
+          placeholder="Seleccione la ubicación"
+          {...form.getInputProps('location')}
+          size={INPUT_SIZE}
         />
 
         <Select
@@ -65,22 +76,36 @@ const CreateEventScreen = () => {
             { value: 'svelte', label: 'Svelte' },
             { value: 'vue', label: 'Vue' },
           ]}
+          size={INPUT_SIZE}
         />
+
+        <Flex gap={16} justify="space-between">
+          <DatePickerInput
+            w="100%"
+            label="Fecha de inicio del evento"
+            withAsterisk
+            placeholder="Seleccione una fecha"
+            locale="es"
+            labelProps={{ size: 16 }}
+            {...form.getInputProps('startDate')}
+          />
+
+          <TextInput
+            w="100%"
+            withAsterisk
+            label="Cantidad de entradas"
+            type="number"
+            placeholder="Ingrese una cantidad"
+            {...form.getInputProps('title')}
+            size={INPUT_SIZE}
+          />
+        </Flex>
 
         <CustomRichTextEditor
           label="Descripción"
           {...form.getInputProps('description')}
+          size={INPUT_SIZE}
         />
-
-        <DatePickerInput
-          label="Fecha de inicio del evento"
-          withAsterisk
-          placeholder="Seleccione una fecha"
-          {...form.getInputProps('startDate')}
-          locale="es"
-        />
-
-        <PlacesSearchBox {...form.getInputProps('location')} />
 
         <Group position="right" mt="md">
           <Button type="submit">Submit</Button>

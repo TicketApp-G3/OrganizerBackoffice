@@ -33,6 +33,7 @@
         "import/no-extraneous-dependencies": "off",
         "react/jsx-props-no-spreading": "off",
         "react/jsx-no-comment-textnodes": "off",
-        "no-console": "off"
+        "no-console": "off",
+        "react/no-unstable-nested-components": "off"
     }
 }

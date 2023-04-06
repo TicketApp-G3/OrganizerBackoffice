@@ -30,7 +30,7 @@ const CustomRichTextEditor = ({ value, onChange, label }) => {
 
   return (
     <div>
-      <Text size={14}>{label}</Text>
+      <Text size={16}>{label}</Text>
       <RichTextEditor editor={editorConfig}>
         <RichTextEditor.Toolbar sticky stickyOffset={60}>
           <RichTextEditor.ControlsGroup>
