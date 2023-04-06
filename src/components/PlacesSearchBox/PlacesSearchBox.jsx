@@ -16,8 +16,8 @@ const PlacesSearchBox = ({
 
       onChange({
         address: place[0].formatted_address,
-        latitude: place[0].geometry.location.lat(),
-        longitude: place[0].geometry.location.lng(),
+        lat: place[0].geometry.location.lat(),
+        long: place[0].geometry.location.lng(),
       })
     })
   }

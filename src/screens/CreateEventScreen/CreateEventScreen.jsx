@@ -14,13 +14,16 @@ const CreateEventScreen = () => {
     initialValues: {
       title: '',
       type: '',
-      startDate: '',
+      date: '',
       description: '',
+      capacity: '',
       location: {
         address: '',
-        latitude: '',
-        longitude: '',
+        lat: '',
+        long: '',
       },
+      status: 'draft',
+      images: [],
     },
   })
 
@@ -87,7 +90,7 @@ const CreateEventScreen = () => {
             placeholder="Seleccione una fecha"
             locale="es"
             labelProps={{ size: 16 }}
-            {...form.getInputProps('startDate')}
+            {...form.getInputProps('date')}
           />
 
           <TextInput
@@ -96,7 +99,7 @@ const CreateEventScreen = () => {
             label="Cantidad de entradas"
             type="number"
             placeholder="Ingrese una cantidad"
-            {...form.getInputProps('title')}
+            {...form.getInputProps('capacity')}
             size={INPUT_SIZE}
           />
         </Flex>
