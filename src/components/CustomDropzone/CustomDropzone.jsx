@@ -66,6 +66,15 @@ const CustomDropzone = () => {
           dragFree
           align="start"
           slidesToScroll={1}
+          mt={24}
+          styles={{
+            control: {
+              '&[data-inactive]': {
+                opacity: 0,
+                cursor: 'default',
+              },
+            },
+          }}
         >
           {imagesUrls.map((imageURL) => (
             <div key={imageURL} className="imageContainer">
@@ -74,7 +83,7 @@ const CustomDropzone = () => {
                 onClick={() => handleDeleteImage(imageURL)}
                 className="deleteImageButton"
               >
-                <IconTrash variant="filled" size="1rem" />
+                <IconTrash variant="filled" size={24} color="white" />
               </ActionIcon>
             </div>
           ))}

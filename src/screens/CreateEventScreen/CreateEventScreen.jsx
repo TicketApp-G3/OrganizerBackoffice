@@ -53,7 +53,10 @@ const CreateEventScreen = () => {
 
   return (
     <div className="container">
-      <form onSubmit={form.onSubmit((values) => console.log(values))}>
+      <form
+        onSubmit={form.onSubmit((values) => console.log(values))}
+        className="formContainer"
+      >
         <TextInput
           withAsterisk
           label="Título"
