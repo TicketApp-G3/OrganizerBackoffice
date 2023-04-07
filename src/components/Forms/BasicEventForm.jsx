@@ -70,7 +70,7 @@ const BasicEventForm = ({ onSubmit, formState }) => {
           size={INPUT_SIZE}
         />
 
-        <CustomDropzone />
+        <CustomDropzone {...formState.getInputProps('images')} />
       </Flex>
     </form>
   )

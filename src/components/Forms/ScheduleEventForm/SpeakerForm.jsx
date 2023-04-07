@@ -1,10 +1,19 @@
-import { Button, Flex, Group, TextInput, Textarea } from '@mantine/core'
+import {
+  Button,
+  Flex,
+  Group,
+  TextInput,
+  Textarea,
+  useMantineTheme,
+} from '@mantine/core'
 import { useForm } from '@mantine/form'
 import React, { useState } from 'react'
 import SpeakInfo from './SpeakInfo'
 
 const SpeakerForm = ({ onSubmit }) => {
   const [submited, setSubmited] = useState(false)
+  const theme = useMantineTheme()
+
   const formState = useForm({
     initialValues: {
       speaker: '',
@@ -26,7 +35,12 @@ const SpeakerForm = ({ onSubmit }) => {
       {submited ? (
         <SpeakInfo data={formState.values} />
       ) : (
-        <Flex direction="column" gap={10} className="speakFormContainer">
+        <Flex
+          direction="column"
+          gap={10}
+          className="speakFormContainer"
+          style={{ borderColor: theme.colors.gray[5] }}
+        >
           <TextInput
             label="Nombre del orador"
             readOnly={submited}
