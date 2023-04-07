@@ -3,7 +3,7 @@ import { getStorage } from 'firebase/storage'
 import { getAnalytics } from 'firebase/analytics'
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_NETLIFY_FIREBASE_API_KEY,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: 'ticketapp-fiuba.firebaseapp.com',
   projectId: 'ticketapp-fiuba',
   storageBucket: 'ticketapp-fiuba.appspot.com',
