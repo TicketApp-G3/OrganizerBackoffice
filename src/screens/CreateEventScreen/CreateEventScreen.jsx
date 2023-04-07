@@ -1,17 +1,13 @@
 import React from 'react'
 import './CreateEventScreenStyles.css'
 import { useForm } from '@mantine/form'
-import { Button, Flex, Group, Select, TextInput } from '@mantine/core'
-import { DatePickerInput } from '@mantine/dates'
 
-import Dropzone from 'react-dropzone'
-import CustomRichTextEditor from '../../components/CustomRichTextEditor/CustomRichTextEditor'
-import PlacesSearchBox from '../../components/PlacesSearchBox/PlacesSearchBox'
-import CustomDropzone from '../../components/CustomDropzone/CustomDropzone'
+import { Accordion, Box, Button } from '@mantine/core'
 import BasicEventForm from '../../components/Forms/BasicEventForm'
+import ScheduleEventForm from '../../components/Forms/ScheduleEventForm/ScheduleEventForm'
 
 const CreateEventScreen = () => {
-  const form = useForm({
+  const basicFormState = useForm({
     initialValues: {
       title: '',
       type: '',
@@ -28,19 +24,48 @@ const CreateEventScreen = () => {
     },
   })
 
-  const onSubmit = () => {
-    form.onSubmit((values) => console.log(values))
+  const scheduleFormState = useForm({})
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    console.log(basicFormState.values)
   }
 
   return (
-    <div className="container">
-      <form onSubmit={onSubmit} className="formContainer">
-        <BasicEventForm formState={form} />
-        <Group position="right" mt="md">
-          <Button type="submit">Submit</Button>
-        </Group>
-      </form>
-    </div>
+    <Box w={{ xs: '100%', md: '55%' }} className="formContainer">
+      <Accordion defaultValue="information" transitionDuration={500}>
+        <Accordion.Item value="information">
+          <Accordion.Control>
+            <b>Información del evento</b>
+          </Accordion.Control>
+          <Accordion.Panel>
+            <BasicEventForm formState={basicFormState} onSubmit={onSubmit} />
+          </Accordion.Panel>
+        </Accordion.Item>
+
+        {basicFormState.values.type === 'conference' && (
+          <Accordion.Item value="conference">
+            <Accordion.Control>
+              <b>Agenda de la conferencia</b>
+            </Accordion.Control>
+            <Accordion.Panel>
+              <ScheduleEventForm formState={scheduleFormState} />
+            </Accordion.Panel>
+          </Accordion.Item>
+        )}
+
+        <Accordion.Item value="faqs">
+          <Accordion.Control>
+            <b>FAQs</b>
+          </Accordion.Control>
+          <Accordion.Panel>Acá van las Faqs</Accordion.Panel>
+        </Accordion.Item>
+      </Accordion>
+
+      <Button form="createEventForm" type="submit">
+        Submit
+      </Button>
+    </Box>
   )
 }
 
