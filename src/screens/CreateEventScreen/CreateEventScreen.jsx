@@ -5,9 +5,10 @@ import { useForm } from '@mantine/form'
 import { Accordion, Box, Button } from '@mantine/core'
 import BasicEventForm from '../../components/Forms/BasicEventForm'
 import ScheduleEventForm from '../../components/Forms/ScheduleEventForm/ScheduleEventForm'
+import FaqsEventForm from '../../components/Forms/FaqsEventForm/FaqsEventForm'
 
 const CreateEventScreen = () => {
-  const basicFormState = useForm({
+  const formState = useForm({
     initialValues: {
       title: '',
       type: '',
@@ -21,14 +22,14 @@ const CreateEventScreen = () => {
       },
       status: 'draft',
       images: [],
+      schedule: [],
+      faqs: [],
     },
   })
 
-  const scheduleFormState = useForm({})
-
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log(basicFormState.values)
+    console.log(formState.values)
   }
 
   return (
@@ -39,17 +40,17 @@ const CreateEventScreen = () => {
             <b>Información del evento</b>
           </Accordion.Control>
           <Accordion.Panel>
-            <BasicEventForm formState={basicFormState} onSubmit={onSubmit} />
+            <BasicEventForm formState={formState} onSubmit={onSubmit} />
           </Accordion.Panel>
         </Accordion.Item>
 
-        {basicFormState.values.type === 'conference' && (
+        {formState.values.type === 'conference' && (
           <Accordion.Item value="conference">
             <Accordion.Control>
               <b>Agenda de la conferencia</b>
             </Accordion.Control>
             <Accordion.Panel>
-              <ScheduleEventForm formState={scheduleFormState} />
+              <ScheduleEventForm formState={formState} />
             </Accordion.Panel>
           </Accordion.Item>
         )}
@@ -58,7 +59,9 @@ const CreateEventScreen = () => {
           <Accordion.Control>
             <b>FAQs</b>
           </Accordion.Control>
-          <Accordion.Panel>Acá van las Faqs</Accordion.Panel>
+          <Accordion.Panel>
+            <FaqsEventForm formState={formState} />
+          </Accordion.Panel>
         </Accordion.Item>
       </Accordion>
 
