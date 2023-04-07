@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { Flex, Text } from '@mantine/core'
+import { Flex } from '@mantine/core'
 import SpeakerForm from './SpeakerForm'
-import './ScheduleEventFormStyles.css'
 
 const ScheduleEventForm = ({ formState }) => {
   const [speak, setSpeak] = useState([])
