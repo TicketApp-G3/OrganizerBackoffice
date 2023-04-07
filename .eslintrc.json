@@ -34,6 +34,7 @@
         "react/jsx-props-no-spreading": "off",
         "react/jsx-no-comment-textnodes": "off",
         "no-console": "off",
-        "react/no-unstable-nested-components": "off"
+        "react/no-unstable-nested-components": "off",
+        "react/no-array-index-key": "off"
     }
 }

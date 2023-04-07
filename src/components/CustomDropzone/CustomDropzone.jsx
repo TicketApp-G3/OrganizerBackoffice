@@ -1,15 +1,17 @@
 import { ActionIcon, Group, Text, useMantineTheme } from '@mantine/core'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import { IconPhoto, IconTrash, IconUpload, IconX } from '@tabler/icons-react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Carousel } from '@mantine/carousel'
 import { useImagesUploader } from '../../hooks/useImagesUploader'
 import './CustomDropzoneStyles.css'
 
-const CustomDropzone = () => {
+const CustomDropzone = ({ onChange }) => {
   const theme = useMantineTheme()
 
   const { uploadImages, handleDeleteImage, imagesUrls } = useImagesUploader()
+
+  useEffect(() => onChange(imagesUrls), [imagesUrls])
 
   return (
     <div>
