@@ -7,7 +7,7 @@ const FaqInfo = ({ data }) => {
   const { question, answer } = data
   return (
     <div
-      className="speakerContainer"
+      className="formContainer"
       style={{ borderColor: theme.colors.gray[5] }}
     >
       <Text fw="bold">{question}</Text>

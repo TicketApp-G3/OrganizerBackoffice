@@ -38,7 +38,7 @@ const SpeakerForm = ({ onSubmit }) => {
         <Flex
           direction="column"
           gap={10}
-          className="speakFormContainer"
+          className="formContainer"
           style={{ borderColor: theme.colors.gray[5] }}
         >
           <TextInput

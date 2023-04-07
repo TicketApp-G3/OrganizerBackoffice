@@ -38,9 +38,6 @@ const CustomRichTextEditor = ({ value, onChange, label }) => {
             <RichTextEditor.Italic />
             <RichTextEditor.Underline />
             <RichTextEditor.Strikethrough />
-            <RichTextEditor.ClearFormatting />
-            <RichTextEditor.Highlight />
-            <RichTextEditor.Code />
           </RichTextEditor.ControlsGroup>
 
           <RichTextEditor.ControlsGroup>
@@ -52,10 +49,8 @@ const CustomRichTextEditor = ({ value, onChange, label }) => {
 
           <RichTextEditor.ControlsGroup>
             <RichTextEditor.Blockquote />
-            <RichTextEditor.Hr />
             <RichTextEditor.BulletList />
             <RichTextEditor.OrderedList />
-            <RichTextEditor.Subscript />
             <RichTextEditor.Superscript />
           </RichTextEditor.ControlsGroup>
 

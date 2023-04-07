@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Select, TextInput } from '@mantine/core'
+import { Flex, Select, TextInput, useMantineTheme } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 import PlacesSearchBox from '../PlacesSearchBox/PlacesSearchBox'
 import CustomRichTextEditor from '../CustomRichTextEditor/CustomRichTextEditor'
@@ -8,9 +8,16 @@ import CustomDropzone from '../CustomDropzone/CustomDropzone'
 const INPUT_SIZE = 'sm'
 
 const BasicEventForm = ({ onSubmit, formState }) => {
+  const theme = useMantineTheme()
+
   return (
     <form onSubmit={onSubmit} id="createEventForm">
-      <Flex direction="column" gap={16}>
+      <Flex
+        direction="column"
+        gap={16}
+        className="formContainer"
+        style={{ borderColor: theme.colors.gray[5] }}
+      >
         <TextInput
           withAsterisk
           label="Título"
