@@ -4,8 +4,10 @@ import { useForm } from '@mantine/form'
 import { Button, Flex, Group, Select, TextInput } from '@mantine/core'
 import { DatePickerInput } from '@mantine/dates'
 
+import Dropzone from 'react-dropzone'
 import CustomRichTextEditor from '../../components/CustomRichTextEditor/CustomRichTextEditor'
 import PlacesSearchBox from '../../components/PlacesSearchBox/PlacesSearchBox'
+import CustomDropzone from '../../components/CustomDropzone/CustomDropzone'
 
 const INPUT_SIZE = 'md'
 
@@ -109,6 +111,8 @@ const CreateEventScreen = () => {
           {...form.getInputProps('description')}
           size={INPUT_SIZE}
         />
+
+        <CustomDropzone />
 
         <Group position="right" mt="md">
           <Button type="submit">Submit</Button>
