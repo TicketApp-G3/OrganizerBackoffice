@@ -8,7 +8,7 @@ const CustomHeader = ({ opened, handleBurguerOpened }) => {
   return (
     <Header height={55} className="headerContainer">
       <Flex align="center" h="100%" gap={20}>
-        <a href="/dashboard">
+        <a href="/">
           <img src={logo} alt="logo" width={90} />
         </a>
 
