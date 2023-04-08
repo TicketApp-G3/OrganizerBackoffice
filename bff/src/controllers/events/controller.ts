@@ -1,4 +1,4 @@
-import { Request } from '@shared'
+import { Request, Response } from '@shared'
 import pinoLogger from 'pino'
 import axios from 'axios'
 
@@ -16,22 +16,22 @@ class EventController implements EventControllerInterface {
   }
 
   public async createEvent(req: Request): Promise<any> {
-    const response = await axios.post('http://localhost:8080/events', req.body)
-    return response
+    const response = await axios.post('http://event_ms:8080/events', req.body)
+    return response.data
   }
 
   public async getOwnEvents(req: Request): Promise<any> {
-    const response = await axios.get(`http://localhost:8080/events/`, {
+    const response = await axios.get(`http://event_ms:8080/events`, {
       params: { userId: req.query.userId },
     })
-    return response
+    return response.data
   }
 
   public async getEventById(req: Request): Promise<any> {
-    const response = await axios.get(`http://localhost:8080/events/}`, {
-      params: { eventId: req.params.eventId },
-    })
-    return response
+    const response = await axios.get(
+      `http://event_ms:8080/events/${req.params.eventId}`
+    )
+    return response.data
   }
 }
 
