@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import PrivateRoutes from './PrivateRoutes'
 import PublicRoutes from './PublicRoutes'
-import DashboardRoutes from './DashboardRoutes'
+import DashboardLayout from './DashboardLayout'
 
 const AppRouter = () => {
   return (
@@ -13,7 +13,7 @@ const AppRouter = () => {
           path="/dashboard/*"
           element={
             <PrivateRoutes>
-              <DashboardRoutes />
+              <DashboardLayout />
             </PrivateRoutes>
           }
         />

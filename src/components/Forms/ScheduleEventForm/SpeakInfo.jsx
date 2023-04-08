@@ -7,7 +7,7 @@ const SpeakInfo = ({ data }) => {
   const { speaker, speakTitle, speakDescription } = data
   return (
     <div
-      className="speakerContainer"
+      className="formContainer"
       style={{ borderColor: theme.colors.gray[5] }}
     >
       <Text>

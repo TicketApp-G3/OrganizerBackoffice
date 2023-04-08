@@ -1,5 +1,5 @@
 export const customTheme = {
-  primaryColor: 'red',
+  primaryColor: 'blue',
   colors: {
     red: [
       '#FDDACF',
