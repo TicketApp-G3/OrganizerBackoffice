@@ -9,7 +9,6 @@ const INPUT_SIZE = 'sm'
 
 const BasicEventForm = ({ formState }) => {
   const theme = useMantineTheme()
-  // console.log(formState.values.date.toISOString())
 
   return (
     <form id="createEventForm">
@@ -58,7 +57,7 @@ const BasicEventForm = ({ formState }) => {
             locale="es"
             labelProps={{ size: 14 }}
             size="xs"
-            {...formState.getInputProps('date')}
+            {...formState.getInputProps('dateTime')}
           />
 
           <TextInput
