@@ -1,9 +1,9 @@
 import React from 'react'
 import './CreateEventScreenStyles.css'
 import { useForm } from '@mantine/form'
-
 import { Accordion, Box, Button, Space, Title } from '@mantine/core'
 import { useNavigate } from 'react-router'
+import { notifications } from '@mantine/notifications'
 import BasicEventForm from '../../components/Forms/BasicEventForm'
 import ScheduleEventForm from '../../components/Forms/ScheduleEventForm/ScheduleEventForm'
 import FaqsEventForm from '../../components/Forms/FaqsEventForm/FaqsEventForm'
@@ -35,14 +35,27 @@ const CreateEventScreen = () => {
     e.preventDefault()
     const { location, dateTime, capacity, ...data } = formState.values
     const eventData = {
-      dateTime: dateTime.toISOString(),
+      dateTime: dateTime ? dateTime.toISOString() : '',
       capacity: parseInt(capacity, 10),
       ...location,
       ...data,
     }
     await apiProvider().createEvent({
       eventData,
-      onSuccess: () => navigate('/'),
+      onSuccess: () => {
+        notifications.show({
+          title: 'Evento creado correctamente!',
+          color: 'teal',
+        })
+        setTimeout(() => navigate('/'), 1000)
+      },
+      onFailure: ({ statusText }) => {
+        notifications.show({
+          title: 'Error al crear el evento',
+          message: statusText,
+          color: 'red',
+        })
+      },
     })
   }
 

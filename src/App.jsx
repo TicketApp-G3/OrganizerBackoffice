@@ -1,6 +1,7 @@
 import { ColorSchemeProvider, MantineProvider } from '@mantine/core'
 import { useColorScheme, useLocalStorage } from '@mantine/hooks'
 import { useEffect } from 'react'
+import { Notifications } from '@mantine/notifications'
 import { AuthProvider } from './contexts/AuthProvider'
 import AppRouter from './routers/AppRouter'
 import { customTheme } from './themes/customTheme'
@@ -29,6 +30,7 @@ const App = () => {
         theme={{ colorScheme, ...customTheme }}
       >
         <AuthProvider>
+          <Notifications />
           <AppRouter />
         </AuthProvider>
       </MantineProvider>
