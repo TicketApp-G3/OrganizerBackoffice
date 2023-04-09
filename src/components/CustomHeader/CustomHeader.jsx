@@ -8,6 +8,10 @@ const CustomHeader = ({ opened, handleBurguerOpened }) => {
   return (
     <Header height={55} className="headerContainer">
       <Flex align="center" h="100%" gap={20}>
+        <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+          <Burger opened={opened} onClick={handleBurguerOpened} size="sm" />
+        </MediaQuery>
+
         <a href="/">
           <img src={logo} alt="logo" width={90} />
         </a>
@@ -15,10 +19,6 @@ const CustomHeader = ({ opened, handleBurguerOpened }) => {
         <Text fw="bold" size={20}>
           Backoffice
         </Text>
-
-        <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-          <Burger opened={opened} onClick={handleBurguerOpened} size="sm" />
-        </MediaQuery>
       </Flex>
       <SwitchThemeButton />
     </Header>
