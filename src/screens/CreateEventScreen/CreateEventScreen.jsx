@@ -32,43 +32,43 @@ const CreateEventScreen = () => {
     console.log(formState.values)
   }
 
+  const sections = [
+    {
+      value: 'information',
+      title: 'Información del evento',
+      Form: BasicEventForm,
+    },
+    {
+      value: 'schedule',
+      title: 'Agenda',
+      Form: ScheduleEventForm,
+    },
+    {
+      value: 'faqs',
+      title: 'FAQs',
+      Form: FaqsEventForm,
+    },
+  ]
+
   return (
     <>
       <Title>Creación de un evento</Title>
       <Space h={24} />
       <Box w={{ md: 700 }} className="createEventContainer">
         <Accordion defaultValue="information" transitionDuration={500}>
-          <Accordion.Item value="information">
-            <Accordion.Control>
-              <b>Información del evento</b>
-            </Accordion.Control>
-            <Accordion.Panel>
-              <BasicEventForm formState={formState} onSubmit={onSubmit} />
-            </Accordion.Panel>
-          </Accordion.Item>
-
-          {formState.values.type === 'conference' && (
-            <Accordion.Item value="conference">
+          {sections.map(({ value, title, Form }) => (
+            <Accordion.Item value={value} key={value}>
               <Accordion.Control>
-                <b>Agenda de la conferencia</b>
+                <b>{title}</b>
               </Accordion.Control>
               <Accordion.Panel>
-                <ScheduleEventForm formState={formState} />
+                <Form formState={formState} />
               </Accordion.Panel>
             </Accordion.Item>
-          )}
-
-          <Accordion.Item value="faqs">
-            <Accordion.Control>
-              <b>FAQs</b>
-            </Accordion.Control>
-            <Accordion.Panel>
-              <FaqsEventForm formState={formState} />
-            </Accordion.Panel>
-          </Accordion.Item>
+          ))}
         </Accordion>
 
-        <Button form="createEventForm" type="submit">
+        <Button form="createEventForm" type="submit" onClick={onSubmit}>
           Crear evento
         </Button>
       </Box>
