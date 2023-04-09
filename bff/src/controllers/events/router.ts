@@ -1,7 +1,7 @@
 import { registerHandler, validateDto, Request } from '@shared'
 import { Router } from 'express'
 import { eventController } from './controller'
-import { EventCreationDTO } from './dtos'
+import { EventCreationDTO, GetOwnEvents } from './dtos'
 import { StatusCodes } from 'http-status-codes'
 
 export function EventRouter() {
@@ -18,6 +18,7 @@ export function EventRouter() {
 
   router.get(
     '/own',
+    validateDto(GetOwnEvents, 'query'),
     registerHandler((req) => eventController.getOwnEvents(req), StatusCodes.OK)
   )
 
