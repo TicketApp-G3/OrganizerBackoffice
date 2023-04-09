@@ -5,7 +5,7 @@ import { Notifications } from '@mantine/notifications'
 import { AuthProvider } from './contexts/AuthProvider'
 import AppRouter from './routers/AppRouter'
 import { customTheme } from './themes/customTheme'
-import apiProvider from './api/bffService'
+import apiProvider from './api/apiProvider'
 
 const App = () => {
   const preferredColorScheme = useColorScheme()

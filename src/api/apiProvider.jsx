@@ -36,6 +36,15 @@ const apiProvider = () => {
     })
   }
 
+  const getMyEvents = async ({ userId, onSuccess, onFailure }) => {
+    request({
+      method: 'get',
+      url: `events?userId=${userId}`,
+      onSuccess,
+      onFailure,
+    })
+  }
+
   const health = async () => {
     request({
       method: 'get',
@@ -48,6 +57,7 @@ const apiProvider = () => {
   return {
     health,
     createEvent,
+    getMyEvents,
   }
 }
 
