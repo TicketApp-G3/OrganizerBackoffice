@@ -12,25 +12,25 @@ const apiProvider = () => {
     onFailure = () => {},
   }) => {
     try {
-      const { data, status, statusText } = await axios({
+      const { data } = await axios({
         method,
         url: `${baseURL}${url}`,
         data: body,
         ...options,
       })
-      return status === 200
-        ? onSuccess(data)
-        : onFailure({ status, statusText })
+      onSuccess(data)
     } catch (error) {
-      throw error.response.data
+      const { status, statusText } = error.response
+      onFailure({ status, statusText })
+      console.error('Error Code: ', status, ' Message: ', statusText)
     }
   }
 
-  const createEvent = async (eventData, onSuccess, onFailure) => {
+  const createEvent = async ({ eventData, onSuccess, onFailure }) => {
     request({
       method: 'post',
       url: 'events',
-      data: eventData,
+      body: eventData,
       onSuccess,
       onFailure,
     })
