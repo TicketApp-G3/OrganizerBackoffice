@@ -1,17 +1,18 @@
 import React from 'react'
 import { Flex, Select, TextInput, useMantineTheme } from '@mantine/core'
-import { DatePickerInput } from '@mantine/dates'
+import { DateTimePicker } from '@mantine/dates'
 import PlacesSearchBox from '../PlacesSearchBox/PlacesSearchBox'
 import CustomRichTextEditor from '../CustomRichTextEditor/CustomRichTextEditor'
 import CustomDropzone from '../CustomDropzone/CustomDropzone'
 
 const INPUT_SIZE = 'sm'
 
-const BasicEventForm = ({ onSubmit, formState }) => {
+const BasicEventForm = ({ formState }) => {
   const theme = useMantineTheme()
+  // console.log(formState.values.date.toISOString())
 
   return (
-    <form onSubmit={onSubmit} id="createEventForm">
+    <form id="createEventForm">
       <Flex
         direction="column"
         gap={16}
@@ -49,7 +50,7 @@ const BasicEventForm = ({ onSubmit, formState }) => {
         />
 
         <Flex gap={16} justify="space-between">
-          <DatePickerInput
+          <DateTimePicker
             w="100%"
             label="Fecha de inicio del evento"
             withAsterisk

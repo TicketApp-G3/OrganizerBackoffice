@@ -8,6 +8,7 @@ import {
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import React, { useState } from 'react'
+import { TimeInput } from '@mantine/dates'
 import SpeakInfo from './SpeakInfo'
 
 const SpeakerForm = ({ onSubmit }) => {
@@ -21,7 +22,6 @@ const SpeakerForm = ({ onSubmit }) => {
       speakDescription: '',
       image: '',
       startTime: '',
-      endTime: '',
     },
   })
 
@@ -42,19 +42,25 @@ const SpeakerForm = ({ onSubmit }) => {
           style={{ borderColor: theme.colors.gray[5] }}
         >
           <TextInput
-            label="Nombre del orador"
+            label="Nombre"
             readOnly={submited}
             {...formState.getInputProps('speaker')}
           />
           <TextInput
-            label="Título de la charla"
+            label="Título"
             readOnly={submited}
             {...formState.getInputProps('speakTitle')}
           />
           <Textarea
-            label="Descripción de la charla"
+            label="Descripción"
             readOnly={submited}
             {...formState.getInputProps('speakDescription')}
+          />
+          <TimeInput
+            label="Hora de inicio"
+            locale="es"
+            size="sm"
+            {...formState.getInputProps('startTime')}
           />
           <Group position="right" mt="md">
             <Button variant="outline" type="submit">
