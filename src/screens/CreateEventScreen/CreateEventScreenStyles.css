@@ -1,0 +1,12 @@
+.createEventContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: 0 auto;
+}
+
+.formContainer {
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px 10px;
+}
