@@ -1,7 +1,10 @@
 import axios from 'axios'
 
 const apiProvider = () => {
-  const baseURL = 'http://localhost:8080/'
+  const baseURL =
+    import.meta.env.VITE_ENV === 'production'
+      ? 'https://ticket-app-ms-events.onrender.com'
+      : 'http://localhost:8080'
 
   const request = async ({
     method,
@@ -29,7 +32,7 @@ const apiProvider = () => {
   const createEvent = async ({ eventData, onSuccess, onFailure }) => {
     request({
       method: 'post',
-      url: 'events',
+      url: '/events',
       body: eventData,
       onSuccess,
       onFailure,
@@ -39,7 +42,7 @@ const apiProvider = () => {
   const getMyEvents = async ({ userId, onSuccess, onFailure }) => {
     request({
       method: 'get',
-      url: `events?userId=${userId}`,
+      url: `/events?userId=${userId}`,
       onSuccess,
       onFailure,
     })
@@ -48,7 +51,7 @@ const apiProvider = () => {
   const health = async () => {
     request({
       method: 'get',
-      url: 'health',
+      url: '/health',
       onSuccess: () => console.log('BFF CONECTION: OK'),
       onFailure: () => console.log('BFF CONECTION: FAIL'),
     })
