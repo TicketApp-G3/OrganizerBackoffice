@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './MyEventsScreenStyles.css'
-import { SimpleGrid, Space, Title } from '@mantine/core'
+import { SimpleGrid, Space, Text, Title } from '@mantine/core'
 import apiProvider from '../../api/apiProvider'
 import EventCard from '../../components/EventCard/EventCard'
 
@@ -28,9 +28,11 @@ const MyEventsScreen = () => {
           { maxWidth: 'xs', cols: 1, spacing: 'xs' },
         ]}
       >
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
+        {!events.length ? (
+          <Text>No tienes eventos todavía</Text>
+        ) : (
+          events.map((event) => <EventCard key={event.id} event={event} />)
+        )}
       </SimpleGrid>
     </>
   )
