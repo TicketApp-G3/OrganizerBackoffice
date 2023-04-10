@@ -40,7 +40,7 @@ const CustomNavbar = ({ opened }) => {
       p="md"
       hiddenBreakpoint="sm"
       hidden={!opened}
-      width={{ sm: 200, lg: 300 }}
+      width={{ sm: 250, lg: 300 }}
       style={{ gap: 4 }}
     >
       {Object.values(sections).map(({ label, path, icon: Icon }) => (

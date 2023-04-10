@@ -1,0 +1,11 @@
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}

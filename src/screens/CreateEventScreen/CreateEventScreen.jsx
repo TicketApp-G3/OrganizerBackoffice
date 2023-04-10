@@ -7,7 +7,7 @@ import { notifications } from '@mantine/notifications'
 import BasicEventForm from '../../components/Forms/BasicEventForm'
 import ScheduleEventForm from '../../components/Forms/ScheduleEventForm/ScheduleEventForm'
 import FaqsEventForm from '../../components/Forms/FaqsEventForm/FaqsEventForm'
-import apiProvider from '../../api/bffService'
+import apiProvider from '../../api/apiProvider'
 
 const CreateEventScreen = () => {
   const navigate = useNavigate()
