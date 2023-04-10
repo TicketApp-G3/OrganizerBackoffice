@@ -17,7 +17,7 @@ const SpeakerForm = ({ onSubmit }) => {
 
   const formState = useForm({
     initialValues: {
-      speaker: '',
+      presenter: '',
       title: '',
       description: '',
       image: '',
@@ -44,7 +44,7 @@ const SpeakerForm = ({ onSubmit }) => {
           <TextInput
             label="Nombre"
             readOnly={submited}
-            {...formState.getInputProps('speaker')}
+            {...formState.getInputProps('presenter')}
           />
           <TextInput
             label="Título"
