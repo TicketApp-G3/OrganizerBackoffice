@@ -18,10 +18,10 @@ const SpeakerForm = ({ onSubmit }) => {
   const formState = useForm({
     initialValues: {
       speaker: '',
-      speakTitle: '',
-      speakDescription: '',
+      title: '',
+      description: '',
       image: '',
-      startTime: '',
+      timeFrom: '',
     },
   })
 
@@ -49,18 +49,18 @@ const SpeakerForm = ({ onSubmit }) => {
           <TextInput
             label="Título"
             readOnly={submited}
-            {...formState.getInputProps('speakTitle')}
+            {...formState.getInputProps('title')}
           />
           <Textarea
             label="Descripción"
             readOnly={submited}
-            {...formState.getInputProps('speakDescription')}
+            {...formState.getInputProps('description')}
           />
           <TimeInput
             label="Hora de inicio"
             locale="es"
             size="sm"
-            {...formState.getInputProps('startTime')}
+            {...formState.getInputProps('timeFrom')}
           />
           <Group position="right" mt="md">
             <Button variant="outline" type="submit">
