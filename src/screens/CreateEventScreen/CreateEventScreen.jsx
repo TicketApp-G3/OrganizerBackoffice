@@ -40,6 +40,7 @@ const CreateEventScreen = () => {
       ...location,
       ...data,
     }
+
     await apiProvider().createEvent({
       eventData,
       onSuccess: () => {

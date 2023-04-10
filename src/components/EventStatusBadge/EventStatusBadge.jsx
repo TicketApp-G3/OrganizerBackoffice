@@ -10,7 +10,7 @@ const eventStatus = {
     label: 'PUBLICADO',
     color: 'blue',
   },
-  INPROGRESS: {
+  IN_PROGRESS: {
     label: 'EN CURSO',
     color: 'green',
   },
