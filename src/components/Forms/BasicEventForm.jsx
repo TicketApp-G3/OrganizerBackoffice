@@ -40,10 +40,10 @@ const BasicEventForm = ({ formState }) => {
           placeholder="Seleccione el tipo de evento"
           {...formState.getInputProps('type')}
           data={[
-            { value: 'conference', label: 'Conferencia' },
-            { value: 'concert', label: 'Concierto' },
-            { value: 'discotec', label: 'Boliche' },
-            { value: 'stand-up', label: 'Stand Up' },
+            { value: 'CONFERENCE', label: 'Conferencia' },
+            { value: 'CONCERT', label: 'Concierto' },
+            { value: 'DISCOTEC', label: 'Boliche' },
+            { value: 'STAND_UP', label: 'Stand Up' },
           ]}
           size={INPUT_SIZE}
         />
