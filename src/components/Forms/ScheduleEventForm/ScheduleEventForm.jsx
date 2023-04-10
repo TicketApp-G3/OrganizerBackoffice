@@ -8,7 +8,7 @@ const ScheduleEventForm = ({ formState }) => {
 
   const handleAddSpeak = (speakInfo) => {
     setSpeak((prevState) => [...prevState, speakInfo])
-    formState.getInputProps('schedules').onChange([...speak, speakInfo])
+    formState.getInputProps('schedule').onChange([...speak, speakInfo])
     setSpeaksAmount(speaksAmount + 1)
   }
 

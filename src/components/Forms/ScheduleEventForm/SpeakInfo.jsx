@@ -4,14 +4,14 @@ import React from 'react'
 const SpeakInfo = ({ data }) => {
   const theme = useMantineTheme()
 
-  const { speaker, speakTitle, speakDescription, startTime } = data
+  const { presenter, speakTitle, speakDescription, startTime } = data
   return (
     <div
       className="formContainer"
       style={{ borderColor: theme.colors.gray[5] }}
     >
       <Text>
-        <b>Nombre:</b> {speaker}
+        <b>Nombre:</b> {presenter}
       </Text>
       <Text>
         <b>Título:</b> {speakTitle}

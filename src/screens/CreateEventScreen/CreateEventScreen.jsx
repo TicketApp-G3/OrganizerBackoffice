@@ -26,7 +26,7 @@ const CreateEventScreen = () => {
       },
       status: 'draft',
       images: [],
-      schedules: [],
+      schedule: [],
       faqs: [],
     },
   })
@@ -66,7 +66,7 @@ const CreateEventScreen = () => {
       Form: BasicEventForm,
     },
     {
-      value: 'schedules',
+      value: 'schedule',
       title: 'Agenda',
       Form: ScheduleEventForm,
     },
