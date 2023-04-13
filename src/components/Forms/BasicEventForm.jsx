@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Flex, Select, TextInput, useMantineTheme } from '@mantine/core'
+import { Flex, Select, TextInput, useMantineTheme } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import PlacesSearchBox from '../PlacesSearchBox/PlacesSearchBox'
 import CustomRichTextEditor from '../CustomRichTextEditor/CustomRichTextEditor'
@@ -58,6 +58,8 @@ const BasicEventForm = ({ formState, onSubmit }) => {
             withAsterisk
             placeholder="Seleccione una fecha"
             locale="es"
+            hideOutsideDates
+            minDate={new Date()}
             labelProps={{ size: 14 }}
             size="xs"
             {...formState.getInputProps('dateTime')}
