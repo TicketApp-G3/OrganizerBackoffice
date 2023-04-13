@@ -6,7 +6,6 @@ import { StatusCodes } from 'http-status-codes'
 
 export function EventRouter() {
   const router = Router()
-  console.log('EventRouter')
   router.post(
     '/',
     validateDto(EventCreationDTO),
