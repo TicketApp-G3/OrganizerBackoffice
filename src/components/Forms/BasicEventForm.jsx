@@ -1,5 +1,5 @@
 import React from 'react'
-import { Flex, Select, TextInput, useMantineTheme } from '@mantine/core'
+import { Box, Flex, Select, TextInput, useMantineTheme } from '@mantine/core'
 import { DateTimePicker } from '@mantine/dates'
 import PlacesSearchBox from '../PlacesSearchBox/PlacesSearchBox'
 import CustomRichTextEditor from '../CustomRichTextEditor/CustomRichTextEditor'
@@ -7,11 +7,14 @@ import CustomDropzone from '../CustomDropzone/CustomDropzone'
 
 const INPUT_SIZE = 'sm'
 
-const BasicEventForm = ({ formState }) => {
+const BasicEventForm = ({ formState, onSubmit }) => {
   const theme = useMantineTheme()
 
   return (
-    <form id="createEventForm">
+    <form
+      id="createEventForm"
+      onSubmit={formState.onSubmit(() => {}, onSubmit)}
+    >
       <Flex
         direction="column"
         gap={16}
@@ -22,23 +25,22 @@ const BasicEventForm = ({ formState }) => {
           withAsterisk
           label="Título"
           placeholder="Ingrese el título del evento"
-          {...formState.getInputProps('title')}
           size={INPUT_SIZE}
+          {...formState.getInputProps('title')}
         />
 
         <PlacesSearchBox
-          label="Ubicación"
           withAsterisk
+          label="Ubicación"
           placeholder="Seleccione la ubicación"
-          {...formState.getInputProps('location')}
           size={INPUT_SIZE}
+          {...formState.getInputProps('location')}
         />
 
         <Select
-          label="Tipo de evento"
           withAsterisk
+          label="Tipo de evento"
           placeholder="Seleccione el tipo de evento"
-          {...formState.getInputProps('type')}
           data={[
             { value: 'CONFERENCE', label: 'Conferencia' },
             { value: 'CONCERT', label: 'Concierto' },
@@ -46,6 +48,7 @@ const BasicEventForm = ({ formState }) => {
             { value: 'STAND_UP', label: 'Stand Up' },
           ]}
           size={INPUT_SIZE}
+          {...formState.getInputProps('type')}
         />
 
         <Flex gap={16} justify="space-between">
@@ -66,15 +69,15 @@ const BasicEventForm = ({ formState }) => {
             label="Cantidad de entradas"
             type="number"
             placeholder="Ingrese una cantidad"
-            {...formState.getInputProps('capacity')}
             size={INPUT_SIZE}
+            {...formState.getInputProps('capacity')}
           />
         </Flex>
 
         <CustomRichTextEditor
           label="Descripción"
-          {...formState.getInputProps('description')}
           size={INPUT_SIZE}
+          {...formState.getInputProps('description')}
         />
 
         <CustomDropzone {...formState.getInputProps('images')} />

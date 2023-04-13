@@ -7,6 +7,7 @@ const PlacesSearchBox = ({
   withAsterisk,
   placeholder,
   size,
+  error,
 }) => {
   const handleSearch = ({ target }) => {
     const searchBox = new window.google.maps.places.SearchBox(target)
@@ -30,6 +31,7 @@ const PlacesSearchBox = ({
         placeholder={placeholder}
         onChange={handleSearch}
         size={size}
+        error={error}
       />
     </div>
   )

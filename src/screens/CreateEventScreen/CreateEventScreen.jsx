@@ -8,6 +8,11 @@ import BasicEventForm from '../../components/Forms/BasicEventForm'
 import ScheduleEventForm from '../../components/Forms/ScheduleEventForm/ScheduleEventForm'
 import FaqsEventForm from '../../components/Forms/FaqsEventForm/FaqsEventForm'
 import apiProvider from '../../api/apiProvider'
+import {
+  capacityValidation,
+  locationValidation,
+  requiredField,
+} from './formValidations'
 
 const CreateEventScreen = () => {
   const navigate = useNavigate()
@@ -29,11 +34,17 @@ const CreateEventScreen = () => {
       schedule: [],
       faqs: [],
     },
+    validate: {
+      title: requiredField,
+      dateTime: requiredField,
+      type: requiredField,
+      location: locationValidation,
+      capacity: capacityValidation,
+    },
   })
 
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    const { location, dateTime, capacity, ...data } = formState.values
+  const onSubmit = async (errors, values) => {
+    const { location, dateTime, capacity, ...data } = values
     const eventData = {
       dateTime: dateTime ? dateTime.toISOString() : '',
       capacity: parseInt(capacity, 10),
@@ -41,40 +52,49 @@ const CreateEventScreen = () => {
       ...data,
     }
 
-    await apiProvider().createEvent({
-      eventData,
-      onSuccess: () => {
-        notifications.show({
-          title: 'Evento creado correctamente!',
-          color: 'teal',
-        })
-        setTimeout(() => navigate('/'), 1000)
-      },
-      onFailure: ({ statusText }) => {
-        notifications.show({
-          title: 'Error al crear el evento',
-          message: statusText,
-          color: 'red',
-        })
-      },
-    })
+    if (formState.isValid) {
+      notifications.show({
+        title: 'Complete los campos obligatorios',
+        color: 'red',
+      })
+    } else {
+      await apiProvider().createEvent({
+        eventData,
+
+        onSuccess: () => {
+          notifications.show({
+            title: 'Evento creado correctamente!',
+            color: 'teal',
+          })
+          setTimeout(() => navigate('/'), 1000)
+        },
+
+        onFailure: ({ statusText }) => {
+          notifications.show({
+            title: 'Error al crear el evento',
+            message: statusText,
+            color: 'red',
+          })
+        },
+      })
+    }
   }
 
   const sections = [
     {
       value: 'information',
       title: 'Información del evento',
-      Form: BasicEventForm,
+      Form: <BasicEventForm formState={formState} onSubmit={onSubmit} />,
     },
     {
       value: 'schedule',
       title: 'Agenda',
-      Form: ScheduleEventForm,
+      Form: <ScheduleEventForm formState={formState} />,
     },
     {
       value: 'faqs',
       title: 'FAQs',
-      Form: FaqsEventForm,
+      Form: <FaqsEventForm formState={formState} />,
     },
   ]
 
@@ -89,14 +109,12 @@ const CreateEventScreen = () => {
               <Accordion.Control>
                 <b>{title}</b>
               </Accordion.Control>
-              <Accordion.Panel>
-                <Form formState={formState} />
-              </Accordion.Panel>
+              <Accordion.Panel>{Form}</Accordion.Panel>
             </Accordion.Item>
           ))}
         </Accordion>
 
-        <Button form="createEventForm" type="submit" onClick={onSubmit}>
+        <Button form="createEventForm" type="submit">
           Crear evento
         </Button>
       </Box>
