@@ -1,11 +1,7 @@
 .imageContainer {
   position: relative;
-  width: 98%;
-}
-
-.image {
-  height: 300px;
-  object-fit: cover;
+  max-width: 300px;
+  max-height: 325px;
 }
 
 .deleteImageButton {
