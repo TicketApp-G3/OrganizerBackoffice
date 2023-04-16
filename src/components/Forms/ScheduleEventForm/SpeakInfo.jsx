@@ -1,10 +1,10 @@
 import { Text, useMantineTheme } from '@mantine/core'
 import React from 'react'
 
-const SpeakInfo = ({ data }) => {
+const SpeakInfo = ({ speaker }) => {
   const theme = useMantineTheme()
 
-  const { presenter, title, description, timeFrom } = data
+  const { presenter, title, description, timeFrom } = speaker
   return (
     <div
       className="formContainer"

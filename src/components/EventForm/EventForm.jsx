@@ -40,6 +40,9 @@ const EventForm = ({ initialValues, onSubmit }) => {
     },
   })
 
+  console.log('iniciales: ', initialValues)
+  console.log(formState.values)
+
   const sections = [
     {
       value: 'information',
