@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './EventFormStyles.css'
-import { Accordion, Box, Button } from '@mantine/core'
+import { Accordion, Box, Button, Flex } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import BasicEventForm from '../Forms/BasicEventForm'
 import ScheduleEventForm from '../Forms/ScheduleEventForm/ScheduleEventForm'
@@ -27,6 +27,17 @@ const DEFAULT_FORM_VALUES = {
   faqs: [],
 }
 
+const EVENT_STATUSES = {
+  DRAFT: {
+    label: 'Publicar evento',
+    nextStatus: 'IN_PROGRESS',
+  },
+  IN_PROGRESS: {
+    label: 'Finalizar',
+    nextStatus: 'FINISHED',
+  },
+}
+
 const EventForm = ({ initialValues, onSubmit }) => {
   const formState = useForm({
     initialValues: initialValues || DEFAULT_FORM_VALUES,
@@ -38,6 +49,17 @@ const EventForm = ({ initialValues, onSubmit }) => {
       capacity: capacityValidation,
     },
   })
+  const [currentStatus, setCurrentStatus] = useState(initialValues.status)
+  const [isFinished, setIsFinished] = useState(
+    initialValues.status === 'FINISHED'
+  )
+
+  const changeEventStatus = () => {
+    console.log('asdsadas')
+    const { nextStatus } = EVENT_STATUSES[currentStatus]
+    setCurrentStatus(nextStatus)
+    if (nextStatus === 'FINISHED') setIsFinished(true)
+  }
 
   const sections = [
     {
@@ -70,9 +92,31 @@ const EventForm = ({ initialValues, onSubmit }) => {
         ))}
       </Accordion>
 
-      <Button form="createEventForm" type="submit">
-        {initialValues ? 'Guardar cambios ' : 'Crear evento'}
-      </Button>
+      <Flex gap={20}>
+        {initialValues && !isFinished && (
+          <Button
+            fullWidth
+            variant="outline"
+            onClick={() =>
+              changeEventStatus(EVENT_STATUSES[currentStatus].nextStatus)
+            }
+          >
+            {EVENT_STATUSES[currentStatus].label}
+          </Button>
+        )}
+        <Button
+          disabled={isFinished}
+          fullWidth
+          form="createEventForm"
+          type="submit"
+        >
+          {initialValues
+            ? isFinished
+              ? 'Evento Finalizado'
+              : 'Guardar cambios '
+            : 'Crear evento'}
+        </Button>
+      </Flex>
     </Box>
   )
 }
