@@ -1,11 +1,45 @@
 import React from 'react'
 import './EventFormStyles.css'
 import { Accordion, Box, Button } from '@mantine/core'
+import { useForm } from '@mantine/form'
 import BasicEventForm from '../Forms/BasicEventForm'
 import ScheduleEventForm from '../Forms/ScheduleEventForm/ScheduleEventForm'
 import FaqsEventForm from '../Forms/FaqsEventForm/FaqsEventForm'
+import {
+  capacityValidation,
+  locationValidation,
+  requiredField,
+} from './formValidations'
 
-const EventForm = ({ onSubmit, formState }) => {
+const DEFAULT_FORM_VALUES = {
+  title: '',
+  type: '',
+  dateTime: '',
+  description: '',
+  capacity: 0,
+  location: {
+    address: '',
+    latitude: '',
+    longitude: '',
+  },
+  status: 'draft',
+  images: [],
+  schedule: [],
+  faqs: [],
+}
+
+const EventForm = ({ initialValues, onSubmit }) => {
+  const formState = useForm({
+    initialValues: initialValues || DEFAULT_FORM_VALUES,
+    validate: {
+      title: requiredField,
+      dateTime: requiredField,
+      type: requiredField,
+      location: locationValidation,
+      capacity: capacityValidation,
+    },
+  })
+
   const sections = [
     {
       value: 'information',

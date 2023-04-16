@@ -13,7 +13,10 @@ const BasicEventForm = ({ formState, onSubmit }) => {
   return (
     <form
       id="createEventForm"
-      onSubmit={formState.onSubmit(() => {}, onSubmit)}
+      onSubmit={formState.onSubmit(
+        () => {},
+        (errors, values) => onSubmit(errors, values, formState.isValid)
+      )}
     >
       <Flex
         direction="column"
