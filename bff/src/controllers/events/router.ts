@@ -35,5 +35,14 @@ export function EventRouter() {
     )
   )
 
+  router.post(
+    '/:eventId/publish',
+    registerHandler(
+      (req: Request<void, { eventId: string }>) =>
+        eventController.publishEvent(req),
+      StatusCodes.OK
+    )
+  )
+
   return router
 }
