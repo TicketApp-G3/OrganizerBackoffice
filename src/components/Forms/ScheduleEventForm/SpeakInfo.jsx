@@ -1,15 +1,18 @@
 import { Text, useMantineTheme } from '@mantine/core'
 import React from 'react'
+import DeleteButton from '../../DeleteButton/DeleteButton'
+import './SpeakInfoStyles.css'
 
-const SpeakInfo = ({ data }) => {
+const SpeakInfo = ({ speaker, onDelete }) => {
   const theme = useMantineTheme()
 
-  const { presenter, title, description, timeFrom } = data
+  const { presenter, title, description, timeFrom } = speaker
   return (
     <div
       className="formContainer"
       style={{ borderColor: theme.colors.gray[5] }}
     >
+      <DeleteButton onClick={onDelete} />
       <Text>
         <b>Nombre:</b> {presenter}
       </Text>

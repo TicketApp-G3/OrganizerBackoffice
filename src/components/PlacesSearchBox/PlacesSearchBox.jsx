@@ -8,6 +8,7 @@ const PlacesSearchBox = ({
   placeholder,
   size,
   error,
+  value,
 }) => {
   const handleSearch = ({ target }) => {
     const searchBox = new window.google.maps.places.SearchBox(target)
@@ -28,6 +29,7 @@ const PlacesSearchBox = ({
       <TextInput
         withAsterisk={withAsterisk}
         label={label}
+        defaultValue={value}
         placeholder={placeholder}
         onChange={handleSearch}
         size={size}

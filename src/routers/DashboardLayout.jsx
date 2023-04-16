@@ -7,6 +7,7 @@ import CustomHeader from '../components/CustomHeader/CustomHeader'
 import CreateEventScreen from '../screens/CreateEventScreen/CreateEventScreen'
 import MyEventsScreen from '../screens/MyEventsScreen/MyEventsScreen'
 import MetricsScreen from '../screens/Metrics/MetricsScreen'
+import EditEventPage from '../screens/EditEventPage/EditEventPage'
 
 const DashboardLayout = () => {
   const [openNavbar, setOpenNavbar] = useState(false)
@@ -40,6 +41,7 @@ const DashboardLayout = () => {
         <Route path="createEvent" element={<CreateEventScreen />} />
         <Route path="myEvents" element={<MyEventsScreen />} />
         <Route path="metrics" element={<MetricsScreen />} />
+        <Route path="/myEvents/event/:eventId" element={<EditEventPage />} />
         <Route path="/" element={<DashboardScreen />} />
       </Routes>
     </AppShell>
