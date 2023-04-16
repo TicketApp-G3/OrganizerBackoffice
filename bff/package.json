@@ -8,8 +8,7 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .ts",
-    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
-    "prepare": "husky install"
+    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "author": "Hugo Larrea",
   "license": "ISC",
@@ -28,7 +27,6 @@
     "eslint-plugin-n": "^15.3.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-promise": "^6.0.1",
-    "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "ts-node": "^10.9.1",
