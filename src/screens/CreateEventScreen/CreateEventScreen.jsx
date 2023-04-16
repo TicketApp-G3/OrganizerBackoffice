@@ -1,18 +1,16 @@
 import React from 'react'
 import './CreateEventScreenStyles.css'
 import { useForm } from '@mantine/form'
-import { Accordion, Box, Button, Space, Title } from '@mantine/core'
+import { Space, Title } from '@mantine/core'
 import { useNavigate } from 'react-router'
 import { notifications } from '@mantine/notifications'
-import BasicEventForm from '../../components/Forms/BasicEventForm'
-import ScheduleEventForm from '../../components/Forms/ScheduleEventForm/ScheduleEventForm'
-import FaqsEventForm from '../../components/Forms/FaqsEventForm/FaqsEventForm'
 import apiProvider from '../../api/apiProvider'
 import {
   capacityValidation,
   locationValidation,
   requiredField,
 } from './formValidations'
+import EventForm from '../../components/EventForm/EventForm'
 
 const CreateEventScreen = () => {
   const navigate = useNavigate()
@@ -80,44 +78,11 @@ const CreateEventScreen = () => {
     }
   }
 
-  const sections = [
-    {
-      value: 'information',
-      title: 'Información del evento',
-      Form: <BasicEventForm formState={formState} onSubmit={onSubmit} />,
-    },
-    {
-      value: 'schedule',
-      title: 'Agenda',
-      Form: <ScheduleEventForm formState={formState} />,
-    },
-    {
-      value: 'faqs',
-      title: 'FAQs',
-      Form: <FaqsEventForm formState={formState} />,
-    },
-  ]
-
   return (
     <>
       <Title>Creación de un evento</Title>
       <Space h={24} />
-      <Box w={{ md: 700 }} className="createEventContainer">
-        <Accordion defaultValue="information" transitionDuration={500}>
-          {sections.map(({ value, title, Form }) => (
-            <Accordion.Item value={value} key={value}>
-              <Accordion.Control>
-                <b>{title}</b>
-              </Accordion.Control>
-              <Accordion.Panel>{Form}</Accordion.Panel>
-            </Accordion.Item>
-          ))}
-        </Accordion>
-
-        <Button form="createEventForm" type="submit">
-          Crear evento
-        </Button>
-      </Box>
+      <EventForm formState={formState} onSubmit={onSubmit} />
     </>
   )
 }
