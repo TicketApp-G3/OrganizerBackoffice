@@ -6,10 +6,12 @@ import { Carousel } from '@mantine/carousel'
 import { useImagesUploader } from '../../hooks/useImagesUploader'
 import './CustomDropzoneStyles.css'
 
-const CustomDropzone = ({ onChange }) => {
+const CustomDropzone = ({ onChange, initialImages }) => {
   const theme = useMantineTheme()
 
-  const { uploadImages, handleDeleteImage, imagesUrls } = useImagesUploader()
+  const { uploadImages, handleDeleteImage, imagesUrls } = useImagesUploader({
+    initialImages,
+  })
 
   useEffect(() => onChange(imagesUrls), [imagesUrls])
 

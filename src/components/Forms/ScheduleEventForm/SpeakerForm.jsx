@@ -18,9 +18,7 @@ const SpeakerForm = ({ onSubmit }) => {
       presenter: '',
       title: '',
       description: '',
-      image: '',
       timeFrom: '',
-      timeTo: '',
     },
   })
 

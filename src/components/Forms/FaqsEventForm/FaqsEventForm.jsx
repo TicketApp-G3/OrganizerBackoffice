@@ -11,10 +11,21 @@ const FaqsEventForm = ({ formState }) => {
     formState.getInputProps('faqs').onChange([...faqs, speakInfo])
   }
 
+  const handleDeleteFaq = (index) => {
+    const faqsCopy = [...faqs]
+    faqsCopy.splice(index, 1)
+    setFaqs(faqsCopy)
+    formState.getInputProps('faqs').onChange(faqsCopy)
+  }
+
   return (
     <Flex gap={14} direction="column">
       {faqs.map((faq, index) => (
-        <FaqInfo faq={faq} key={index} />
+        <FaqInfo
+          faq={faq}
+          key={index}
+          onDelete={() => handleDeleteFaq(index)}
+        />
       ))}
       <FaqForm onSubmit={handleAddFaq} />
     </Flex>

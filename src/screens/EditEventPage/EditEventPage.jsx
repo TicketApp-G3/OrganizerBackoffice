@@ -37,6 +37,7 @@ const EditEventPage = () => {
   }, [])
 
   const onSubmit = async (errors, values, isValid) => {
+    console.log(values)
     // const { location, dateTime, capacity, ...data } = values
     // const eventData = {
     //   dateTime: dateTime ? dateTime.toISOString() : '',

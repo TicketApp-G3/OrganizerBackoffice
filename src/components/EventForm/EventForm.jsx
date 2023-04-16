@@ -22,7 +22,6 @@ const DEFAULT_FORM_VALUES = {
     latitude: '',
     longitude: '',
   },
-  status: 'DRAFT',
   images: [],
   schedule: [],
   faqs: [],
@@ -72,7 +71,7 @@ const EventForm = ({ initialValues, onSubmit }) => {
       </Accordion>
 
       <Button form="createEventForm" type="submit">
-        Crear evento
+        {initialValues ? 'Guardar cambios ' : 'Crear evento'}
       </Button>
     </Box>
   )
