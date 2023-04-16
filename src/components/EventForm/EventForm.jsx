@@ -55,7 +55,6 @@ const EventForm = ({ initialValues, onSubmit }) => {
   )
 
   const changeEventStatus = () => {
-    console.log('asdsadas')
     const { nextStatus } = EVENT_STATUSES[currentStatus]
     setCurrentStatus(nextStatus)
     if (nextStatus === 'FINISHED') setIsFinished(true)
