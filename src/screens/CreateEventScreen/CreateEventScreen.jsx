@@ -9,9 +9,8 @@ import EventForm from '../../components/EventForm/EventForm'
 const CreateEventScreen = () => {
   const navigate = useNavigate()
 
-  const onSubmit = async (errors, values, isValid) => {
-    console.log(errors, values, isValid)
-    const { location, dateTime, capacity, ...data } = values
+  const onSubmit = async (errors, values, hasErrors) => {
+    const { location, dateTime, capacity, status, ...data } = values
 
     const eventData = {
       dateTime: dateTime ? dateTime.toISOString() : '',
@@ -20,7 +19,7 @@ const CreateEventScreen = () => {
       ...data,
     }
 
-    if (isValid) {
+    if (hasErrors) {
       notifications.show({
         title: 'Complete los campos obligatorios',
         color: 'red',

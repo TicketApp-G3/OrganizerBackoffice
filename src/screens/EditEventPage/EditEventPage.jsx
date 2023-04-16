@@ -16,10 +16,10 @@ const EditEventPage = () => {
     await apiProvider().getEventById({
       eventId,
       onSuccess: (data) => {
-        const { latitude, longitude, address, date_time, ...restData } = data
+        const { latitude, longitude, address, dateTime, ...restData } = data
         const formattedData = {
           ...restData,
-          dateTime: new Date(date_time),
+          dateTime: new Date(dateTime),
           location: {
             latitude,
             longitude,

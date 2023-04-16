@@ -10,13 +10,15 @@ const INPUT_SIZE = 'sm'
 const BasicEventForm = ({ formState, onSubmit }) => {
   const theme = useMantineTheme()
 
+  const handleSubmit = (errors, values) => {
+    const hasErrors = Object.values(errors).some((error) => !!error)
+    onSubmit(errors, values, hasErrors)
+  }
+
   return (
     <form
       id="createEventForm"
-      onSubmit={formState.onSubmit(
-        () => {},
-        (errors, values) => onSubmit(errors, values, formState.isValid)
-      )}
+      onSubmit={formState.onSubmit(() => {}, handleSubmit)}
     >
       <Flex
         direction="column"
@@ -38,6 +40,7 @@ const BasicEventForm = ({ formState, onSubmit }) => {
           placeholder="Seleccione la ubicación"
           size={INPUT_SIZE}
           {...formState.getInputProps('location')}
+          value={formState.values.location.address}
         />
 
         <Select

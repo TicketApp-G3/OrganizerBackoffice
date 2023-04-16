@@ -12,8 +12,13 @@ const FaqForm = ({ onSubmit }) => {
     },
   })
 
+  const handleSubmit = (values) => {
+    formState.reset()
+    onSubmit(values)
+  }
+
   return (
-    <form onSubmit={formState.onSubmit(onSubmit)}>
+    <form onSubmit={formState.onSubmit(handleSubmit)}>
       <Flex
         direction="column"
         gap={10}

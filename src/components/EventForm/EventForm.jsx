@@ -22,7 +22,7 @@ const DEFAULT_FORM_VALUES = {
     latitude: '',
     longitude: '',
   },
-  status: 'draft',
+  status: 'DRAFT',
   images: [],
   schedule: [],
   faqs: [],
@@ -39,9 +39,6 @@ const EventForm = ({ initialValues, onSubmit }) => {
       capacity: capacityValidation,
     },
   })
-
-  console.log('iniciales: ', initialValues)
-  console.log(formState.values)
 
   const sections = [
     {
