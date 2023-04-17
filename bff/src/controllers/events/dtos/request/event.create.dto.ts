@@ -8,9 +8,12 @@ export class EventCreationDTO {
   address: string
   place: string
   type: string
-  dateTime: Date
+  timeFrom: Date
+  timeTo: Date
   images: string[]
   capacity: number
+  faqs: Object[]
+  schedule: Object[]
 }
 
 export const EventCreationDTOSchema = Joi.object({
@@ -21,7 +24,10 @@ export const EventCreationDTOSchema = Joi.object({
   address: Joi.string().required(),
   place: Joi.string().optional(),
   type: Joi.string().required(),
-  dateTime: Joi.date().required(),
+  timeFrom: Joi.date().required(),
+  timeTo: Joi.date().required(),
   images: Joi.array().required(),
   capacity: Joi.number().positive().required(),
+  faqs: Joi.array().optional(),
+  schedule: Joi.array().optional(),
 })

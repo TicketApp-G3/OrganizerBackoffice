@@ -1,12 +1,7 @@
 import { registerHandler, validateSchema, Request, FieldOptions } from '@shared'
 import { Router } from 'express'
 import { eventController } from './controller'
-import {
-  EventCreationDTO,
-  EventCreationDTOSchema,
-  GetOwnEvents,
-  GetOwnEventsSchema,
-} from './dtos'
+import { EventCreationDTOSchema, GetOwnEventsSchema } from './dtos'
 import { StatusCodes } from 'http-status-codes'
 
 export function EventRouter() {
@@ -31,6 +26,15 @@ export function EventRouter() {
     registerHandler(
       (req: Request<void, { eventId: string }>) =>
         eventController.getEventById(req),
+      StatusCodes.OK
+    )
+  )
+
+  router.post(
+    '/:eventId/publish',
+    registerHandler(
+      (req: Request<void, { eventId: string }>) =>
+        eventController.publishEvent(req),
       StatusCodes.OK
     )
   )
