@@ -12,6 +12,8 @@ export class EventCreationDTO {
   timeTo: Date
   images: string[]
   capacity: number
+  faqs: Object[]
+  schedule: Object[]
 }
 
 export const EventCreationDTOSchema = Joi.object({
@@ -26,4 +28,6 @@ export const EventCreationDTOSchema = Joi.object({
   timeTo: Joi.date().required(),
   images: Joi.array().required(),
   capacity: Joi.number().positive().required(),
+  faqs: Joi.array().optional(),
+  schedule: Joi.array().optional(),
 })
