@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router'
 import { notifications } from '@mantine/notifications'
 import { Space, Title } from '@mantine/core'
 import apiProvider from '../../api/apiProvider'
-import EventForm from '../../components/EventForm/EventForm'
+import EventForm from '../../components/Forms/EventForm/EventForm'
 
 const EditEventPage = () => {
   // const navigate = useNavigate()
@@ -16,10 +16,12 @@ const EditEventPage = () => {
     await apiProvider().getEventById({
       eventId,
       onSuccess: (data) => {
-        const { latitude, longitude, address, dateTime, ...restData } = data
+        const { latitude, longitude, address, timeFrom, timeTo, ...restData } =
+          data
         const formattedData = {
           ...restData,
-          dateTime: new Date(dateTime),
+          timeFrom: new Date(timeFrom),
+          timeTo: new Date(timeTo),
           location: {
             latitude,
             longitude,

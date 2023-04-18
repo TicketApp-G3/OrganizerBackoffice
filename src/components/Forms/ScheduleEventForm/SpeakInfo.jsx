@@ -6,7 +6,7 @@ import './SpeakInfoStyles.css'
 const SpeakInfo = ({ speaker, onDelete }) => {
   const theme = useMantineTheme()
 
-  const { presenter, title, description, timeFrom } = speaker
+  const { presenter, title, description, timeFrom, timeTo } = speaker
   return (
     <div
       className="formContainer"
@@ -24,6 +24,9 @@ const SpeakInfo = ({ speaker, onDelete }) => {
       </Text>
       <Text>
         <b>Hora de inicio:</b> {timeFrom}hs
+      </Text>
+      <Text>
+        <b>Hora de Finalización:</b> {timeTo}hs
       </Text>
     </div>
   )

@@ -4,16 +4,17 @@ import { Space, Title } from '@mantine/core'
 import { useNavigate } from 'react-router'
 import { notifications } from '@mantine/notifications'
 import apiProvider from '../../api/apiProvider'
-import EventForm from '../../components/EventForm/EventForm'
+import EventForm from '../../components/Forms/EventForm/EventForm'
 
 const CreateEventScreen = () => {
   const navigate = useNavigate()
 
   const onSubmit = async (errors, values, hasErrors) => {
-    const { location, dateTime, capacity, status, ...data } = values
+    const { location, timeFrom, timeTo, capacity, status, ...data } = values
 
     const eventData = {
-      dateTime: dateTime ? dateTime.toISOString() : '',
+      timeFrom: timeFrom ? timeFrom.toISOString() : '',
+      timeTo: timeTo ? timeTo.toISOString() : '',
       capacity: parseInt(capacity, 10),
       ...location,
       ...data,

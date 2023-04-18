@@ -43,32 +43,24 @@ const BasicEventForm = ({ formState, onSubmit }) => {
           value={formState.values.location.address}
         />
 
-        <Select
-          withAsterisk
-          label="Tipo de evento"
-          placeholder="Seleccione el tipo de evento"
-          data={[
-            { value: 'CONFERENCE', label: 'Conferencia' },
-            { value: 'CONCERT', label: 'Concierto' },
-            { value: 'DISCOTEC', label: 'Boliche' },
-            { value: 'STAND_UP', label: 'Stand Up' },
-          ]}
-          size={INPUT_SIZE}
-          {...formState.getInputProps('type')}
-        />
-
-        <Flex gap={16} justify="space-between">
-          <DateTimePicker
-            w="100%"
-            label="Fecha de inicio del evento"
+        <Flex
+          gap={16}
+          direction={{ 0: 'column', md: 'row' }}
+          justify="space-between"
+        >
+          <Select
             withAsterisk
-            placeholder="Seleccione una fecha"
-            locale="es"
-            hideOutsideDates
-            minDate={new Date()}
-            labelProps={{ size: 14 }}
-            size="xs"
-            {...formState.getInputProps('dateTime')}
+            label="Tipo de evento"
+            w="100%"
+            placeholder="Seleccione el tipo de evento"
+            data={[
+              { value: 'CONFERENCE', label: 'Conferencia' },
+              { value: 'CONCERT', label: 'Concierto' },
+              { value: 'DISCOTEC', label: 'Boliche' },
+              { value: 'STAND_UP', label: 'Stand Up' },
+            ]}
+            size={INPUT_SIZE}
+            {...formState.getInputProps('type')}
           />
 
           <TextInput
@@ -79,6 +71,39 @@ const BasicEventForm = ({ formState, onSubmit }) => {
             placeholder="Ingrese una cantidad"
             size={INPUT_SIZE}
             {...formState.getInputProps('capacity')}
+          />
+        </Flex>
+
+        <Flex
+          gap={16}
+          direction={{ 0: 'column', md: 'row' }}
+          justify="space-between"
+        >
+          <DateTimePicker
+            w="100%"
+            label="Fecha de inicio del evento"
+            withAsterisk
+            placeholder="Seleccione una fecha"
+            locale="es"
+            hideOutsideDates
+            minDate={new Date()}
+            maxDate={formState.values.timeTo}
+            labelProps={{ size: 14 }}
+            size="xs"
+            {...formState.getInputProps('timeFrom')}
+          />
+
+          <DateTimePicker
+            w="100%"
+            label="Fecha de finalización del evento"
+            withAsterisk
+            placeholder="Seleccione una fecha"
+            locale="es"
+            hideOutsideDates
+            minDate={formState.values.timeFrom || new Date()}
+            labelProps={{ size: 14 }}
+            size="xs"
+            {...formState.getInputProps('timeTo')}
           />
         </Flex>
 

@@ -14,7 +14,8 @@ import {
 const DEFAULT_FORM_VALUES = {
   title: '',
   type: '',
-  dateTime: '',
+  timeFrom: '',
+  timeTo: '',
   description: '',
   capacity: 0,
   location: {
@@ -43,15 +44,16 @@ const EventForm = ({ initialValues, onSubmit }) => {
     initialValues: initialValues || DEFAULT_FORM_VALUES,
     validate: {
       title: requiredField,
-      dateTime: requiredField,
+      timeFrom: requiredField,
+      timeTo: requiredField,
       type: requiredField,
       location: locationValidation,
       capacity: capacityValidation,
     },
   })
-  const [currentStatus, setCurrentStatus] = useState(initialValues.status)
+  const [currentStatus, setCurrentStatus] = useState(initialValues?.status)
   const [isFinished, setIsFinished] = useState(
-    initialValues.status === 'FINISHED'
+    initialValues?.status === 'FINISHED'
   )
 
   const changeEventStatus = () => {
