@@ -19,6 +19,7 @@ const SpeakerForm = ({ onSubmit }) => {
       title: '',
       description: '',
       timeFrom: '',
+      timeTo: '',
     },
   })
 
@@ -41,12 +42,28 @@ const SpeakerForm = ({ onSubmit }) => {
           label="Descripción"
           {...formState.getInputProps('description')}
         />
-        <TimeInput
-          label="Hora de inicio"
-          locale="es"
-          size="sm"
-          {...formState.getInputProps('timeFrom')}
-        />
+        <Flex
+          gap={16}
+          direction={{ 0: 'column', md: 'row' }}
+          justify="space-between"
+        >
+          <TimeInput
+            w="100%"
+            label="Hora de inicio"
+            locale="es"
+            size="sm"
+            {...formState.getInputProps('timeFrom')}
+          />
+
+          <TimeInput
+            w="100%"
+            label="Hora de Finalización"
+            locale="es"
+            size="sm"
+            {...formState.getInputProps('timeTo')}
+          />
+        </Flex>
+
         <Group position="right" mt="md">
           <Button variant="outline" type="submit">
             Agregar
