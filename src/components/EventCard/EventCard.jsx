@@ -15,7 +15,7 @@ const EventCard = ({ event }) => {
       withBorder
       key={id}
       component="a"
-      href={`/dashboard/myEvents/event/${id}`}
+      href={`/event/${id}`}
       className="cardContainer"
     >
       <Card.Section>
