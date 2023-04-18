@@ -41,7 +41,7 @@ const DashboardLayout = () => {
         <Route path="createEvent" element={<CreateEventScreen />} />
         <Route path="myEvents" element={<MyEventsScreen />} />
         <Route path="metrics" element={<MetricsScreen />} />
-        <Route path="event/:eventId" element={<EditEventPage />} />
+        <Route path="myEvents/event/:eventId" element={<EditEventPage />} />
         <Route path="/" element={<DashboardScreen />} />
       </Routes>
     </AppShell>
