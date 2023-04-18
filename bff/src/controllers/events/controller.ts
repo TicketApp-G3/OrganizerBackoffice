@@ -6,6 +6,7 @@ interface EventControllerInterface {
   createEvent: (req: Request) => Promise<any>
   getOwnEvents: (req: Request) => Promise<any>
   getEventById: (req: Request) => Promise<any>
+  publishEvent: (req: Request) => Promise<any>
 }
 
 class EventController implements EventControllerInterface {
@@ -30,6 +31,16 @@ class EventController implements EventControllerInterface {
   public async getEventById(req: Request): Promise<any> {
     const response = await axios.get(
       `http://event_ms:8080/events/${req.params.eventId}`
+    )
+    return response.data
+  }
+
+  public async publishEvent(req: Request): Promise<any> {
+    const response = await axios.patch(
+      `http://event_ms:8080/events/${req.params.eventId}`,
+      {
+        status: 'PUBLISHED',
+      }
     )
     return response.data
   }
