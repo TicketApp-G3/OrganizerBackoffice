@@ -1,8 +1,8 @@
 import { NextFunction } from 'express'
 import { StatusCodes } from 'http-status-codes'
-import snakecaseKeys from 'snakecase-keys'
 
 import { Request, Response } from './http'
+import camelcaseKeys from 'camelcase-keys'
 
 type ResBody = Record<string, unknown> | Record<string, unknown>[] | void
 
@@ -24,7 +24,7 @@ export function registerHandler<T = Record<string, unknown>>(
       if (!resObject) {
         res.status(statusCode).send()
       } else {
-        const snakeResObject = snakecaseKeys(resObject, {
+        const snakeResObject = camelcaseKeys(resObject, {
           deep: true,
         })
         res.status(statusCode).json(snakeResObject)

@@ -7,7 +7,7 @@ import apiProvider from '../../api/apiProvider'
 import EventForm from '../../components/Forms/EventForm/EventForm'
 
 const EditEventPage = () => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const [event, setEvent] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const { eventId } = useParams()
@@ -38,39 +38,42 @@ const EditEventPage = () => {
     getEvent()
   }, [])
 
-  const onSubmit = async (errors, values, isValid) => {
-    console.log(values)
-    // const { location, dateTime, capacity, ...data } = values
-    // const eventData = {
-    //   dateTime: dateTime ? dateTime.toISOString() : '',
-    //   capacity: parseInt(capacity, 10),
-    //   ...location,
-    //   ...data,
-    // }
-    // if (isValid) {
-    //   notifications.show({
-    //     title: 'Complete los campos obligatorios',
-    //     color: 'red',
-    //   })
-    // } else {
-    //   await apiProvider().createEvent({
-    //     eventData,
-    //     onSuccess: () => {
-    //       notifications.show({
-    //         title: 'Evento creado correctamente!',
-    //         color: 'teal',
-    //       })
-    //       setTimeout(() => navigate('/'), 1000)
-    //     },
-    //     onFailure: ({ statusText }) => {
-    //       notifications.show({
-    //         title: 'Error al crear el evento',
-    //         message: statusText,
-    //         color: 'red',
-    //       })
-    //     },
-    //   })
-    // }
+  const onSubmit = async (errors, values, hasErrors) => {
+    if (hasErrors) {
+      notifications.show({
+        title: 'Complete los campos obligatorios',
+        color: 'red',
+      })
+      return
+    }
+
+    const { location, timeFrom, timeTo, capacity, status, ...data } = values
+
+    const eventData = {
+      timeFrom: timeFrom ? timeFrom.toISOString() : '',
+      timeTo: timeTo ? timeTo.toISOString() : '',
+      capacity: parseInt(capacity, 10),
+      ...location,
+      ...data,
+    }
+
+    apiProvider().editEvent({
+      eventData,
+      onSuccess: () => {
+        notifications.show({
+          title: 'Evento editado correctamente!',
+          color: 'teal',
+        })
+        setTimeout(() => navigate('/'), 1000)
+      },
+      onFailure: ({ statusText }) => {
+        notifications.show({
+          title: 'Error al editar el evento',
+          message: statusText,
+          color: 'red',
+        })
+      },
+    })
   }
 
   return isLoading ? (

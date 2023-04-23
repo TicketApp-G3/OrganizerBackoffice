@@ -10,6 +10,14 @@ const CreateEventScreen = () => {
   const navigate = useNavigate()
 
   const onSubmit = async (errors, values, hasErrors) => {
+    if (hasErrors) {
+      notifications.show({
+        title: 'Complete los campos obligatorios',
+        color: 'red',
+      })
+      return
+    }
+
     const { location, timeFrom, timeTo, capacity, status, ...data } = values
 
     const eventData = {
@@ -20,32 +28,23 @@ const CreateEventScreen = () => {
       ...data,
     }
 
-    if (hasErrors) {
-      notifications.show({
-        title: 'Complete los campos obligatorios',
-        color: 'red',
-      })
-    } else {
-      await apiProvider().createEvent({
-        eventData,
-
-        onSuccess: () => {
-          notifications.show({
-            title: 'Evento creado correctamente!',
-            color: 'teal',
-          })
-          setTimeout(() => navigate('/'), 1000)
-        },
-
-        onFailure: ({ statusText }) => {
-          notifications.show({
-            title: 'Error al crear el evento',
-            message: statusText,
-            color: 'red',
-          })
-        },
-      })
-    }
+    apiProvider().createEvent({
+      eventData,
+      onSuccess: () => {
+        notifications.show({
+          title: 'Evento creado correctamente!',
+          color: 'teal',
+        })
+        setTimeout(() => navigate('/'), 1000)
+      },
+      onFailure: ({ statusText }) => {
+        notifications.show({
+          title: 'Error al crear el evento',
+          message: statusText,
+          color: 'red',
+        })
+      },
+    })
   }
 
   return (
