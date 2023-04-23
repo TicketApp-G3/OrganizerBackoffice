@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './EventFormStyles.css'
 import { Accordion, Box, Button, Flex } from '@mantine/core'
 import { useForm } from '@mantine/form'
+import { notifications } from '@mantine/notifications'
 import BasicEventForm from '../BasicEventForm'
 import ScheduleEventForm from '../ScheduleEventForm/ScheduleEventForm'
 import FaqsEventForm from '../FaqsEventForm/FaqsEventForm'
@@ -10,6 +11,7 @@ import {
   locationValidation,
   requiredField,
 } from './formValidations'
+import apiProvider from '../../../api/apiProvider'
 
 const DEFAULT_FORM_VALUES = {
   title: '',
@@ -31,11 +33,11 @@ const DEFAULT_FORM_VALUES = {
 const EVENT_STATUSES = {
   DRAFT: {
     label: 'Publicar evento',
-    nextStatus: 'IN_PROGRESS',
+    nextStatus: 'PUBLISHED',
   },
-  IN_PROGRESS: {
-    label: 'Finalizar',
-    nextStatus: 'FINISHED',
+  PUBLISHED: {
+    label: 'Cancelar evento',
+    nextStatus: 'CANCELED',
   },
 }
 
@@ -52,14 +54,26 @@ const EventForm = ({ initialValues, onSubmit }) => {
     },
   })
   const [currentStatus, setCurrentStatus] = useState(initialValues?.status)
-  const [isFinished, setIsFinished] = useState(
-    initialValues?.status === 'FINISHED'
+  const [canChangeStatus, setCanChangeStatus] = useState(
+    initialValues?.status !== 'COMPLETED' &&
+      initialValues?.status !== 'CANCELED'
   )
 
   const changeEventStatus = () => {
     const { nextStatus } = EVENT_STATUSES[currentStatus]
-    setCurrentStatus(nextStatus)
-    if (nextStatus === 'FINISHED') setIsFinished(true)
+    apiProvider().publishEvent({
+      eventId: initialValues.id,
+      onSuccess: () => {
+        setCurrentStatus(nextStatus)
+        notifications.show({
+          title: 'Error al editar el evento',
+          message: 'El evento fue publicado!',
+          color: 'teal',
+        })
+        if (nextStatus === 'COMPLETED' || nextStatus === 'CANCELED')
+          setCanChangeStatus(true)
+      },
+    })
   }
 
   const sections = [
@@ -94,25 +108,19 @@ const EventForm = ({ initialValues, onSubmit }) => {
       </Accordion>
 
       <Flex gap={20}>
-        {initialValues && !isFinished && (
-          <Button
-            fullWidth
-            variant="outline"
-            onClick={() =>
-              changeEventStatus(EVENT_STATUSES[currentStatus].nextStatus)
-            }
-          >
+        {initialValues && canChangeStatus && (
+          <Button fullWidth variant="outline" onClick={changeEventStatus}>
             {EVENT_STATUSES[currentStatus].label}
           </Button>
         )}
         <Button
-          disabled={isFinished}
+          disabled={!canChangeStatus}
           fullWidth
           form="createEventForm"
           type="submit"
         >
           {initialValues
-            ? isFinished
+            ? !canChangeStatus
               ? 'Evento Finalizado'
               : 'Guardar cambios '
             : 'Crear evento'}

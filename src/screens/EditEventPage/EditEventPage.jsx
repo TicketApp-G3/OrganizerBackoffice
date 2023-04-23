@@ -16,8 +16,14 @@ const EditEventPage = () => {
     await apiProvider().getEventById({
       eventId,
       onSuccess: (data) => {
-        const { latitude, longitude, address, timeFrom, timeTo, ...restData } =
-          data
+        const {
+          latitude,
+          longitude,
+          address,
+          time_from: timeFrom, // ARREGLAR EL SNAKECASEE
+          time_to: timeTo,
+          ...restData
+        } = data
         const formattedData = {
           ...restData,
           timeFrom: new Date(timeFrom),

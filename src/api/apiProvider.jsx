@@ -4,7 +4,7 @@ const apiProvider = () => {
   const baseURL =
     import.meta.env.VITE_ENV === 'production'
       ? 'https://ticket-app-ms-events.onrender.com'
-      : 'http://localhost:8080'
+      : 'http://localhost:8081'
 
   const request = async ({
     method,
@@ -52,7 +52,7 @@ const apiProvider = () => {
   const getMyEvents = async ({ userId, onSuccess, onFailure }) => {
     request({
       method: 'get',
-      url: `/events?ownerId=${userId}`,
+      url: `/events/own?ownerId=${userId}`,
       onSuccess,
       onFailure,
     })
@@ -62,6 +62,15 @@ const apiProvider = () => {
     request({
       method: 'get',
       url: `/events/${eventId}`,
+      onSuccess,
+      onFailure,
+    })
+  }
+
+  const publishEvent = async ({ eventId, onSuccess, onFailure }) => {
+    request({
+      method: 'post',
+      url: `/events/${eventId}/publish`,
       onSuccess,
       onFailure,
     })
@@ -82,6 +91,7 @@ const apiProvider = () => {
     editEvent,
     getMyEvents,
     getEventById,
+    publishEvent,
   }
 }
 
