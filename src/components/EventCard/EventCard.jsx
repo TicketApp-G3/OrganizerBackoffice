@@ -7,15 +7,7 @@ import './EventCardStyles.css'
 import EventTypeBadge from '../EventTypeBadge/EventTypeBadge'
 
 const EventCard = ({ event }) => {
-  const {
-    images,
-    title,
-    address,
-    time_from: timeFrom, // ARREGLAR EL SNAKE_CASE
-    type,
-    id,
-    status,
-  } = event
+  const { images, title, address, timeFrom, type, id, status } = event
   const navigate = useNavigate()
 
   return (
