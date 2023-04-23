@@ -39,6 +39,16 @@ const apiProvider = () => {
     })
   }
 
+  const editEvent = async ({ eventData, onSuccess, onFailure }) => {
+    request({
+      method: 'patch',
+      url: `/events/${eventData.id}`,
+      body: eventData,
+      onSuccess,
+      onFailure,
+    })
+  }
+
   const getMyEvents = async ({ userId, onSuccess, onFailure }) => {
     request({
       method: 'get',
@@ -69,6 +79,7 @@ const apiProvider = () => {
   return {
     health,
     createEvent,
+    editEvent,
     getMyEvents,
     getEventById,
   }
