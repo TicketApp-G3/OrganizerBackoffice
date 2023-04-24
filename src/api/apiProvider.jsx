@@ -1,10 +1,7 @@
 import axios from 'axios'
 
 const apiProvider = () => {
-  const baseURL =
-    import.meta.env.VITE_ENV === 'production'
-      ? 'https://ticket-app-ms-events.onrender.com'
-      : 'http://localhost:8081'
+  const baseURL = 'http://localhost:8081'
 
   const request = async ({
     method,
