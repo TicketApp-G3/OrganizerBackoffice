@@ -36,10 +36,10 @@ const apiProvider = () => {
     })
   }
 
-  const editEvent = async ({ eventData, onSuccess, onFailure }) => {
+  const editEvent = async ({ eventId, eventData, onSuccess, onFailure }) => {
     request({
       method: 'patch',
-      url: `/events/${eventData.id}`,
+      url: `/events/${eventId}`,
       body: eventData,
       onSuccess,
       onFailure,

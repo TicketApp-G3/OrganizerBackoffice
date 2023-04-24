@@ -47,7 +47,8 @@ const EditEventPage = () => {
       return
     }
 
-    const { location, timeFrom, timeTo, capacity, status, ...data } = values
+    const { location, timeFrom, timeTo, capacity, status, id, count, ...data } =
+      values
 
     const eventData = {
       timeFrom: timeFrom ? timeFrom.toISOString() : '',
@@ -58,6 +59,7 @@ const EditEventPage = () => {
     }
 
     apiProvider().editEvent({
+      eventId: id,
       eventData,
       onSuccess: () => {
         notifications.show({

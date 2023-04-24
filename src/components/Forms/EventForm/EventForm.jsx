@@ -53,7 +53,9 @@ const EventForm = ({ initialValues, onSubmit }) => {
       capacity: capacityValidation,
     },
   })
-  const [currentStatus, setCurrentStatus] = useState(initialValues?.status)
+  const [currentStatus, setCurrentStatus] = useState(
+    initialValues?.status || 'DRAFT'
+  )
   const [canChangeStatus, setCanChangeStatus] = useState(
     currentStatus === 'DRAFT' || currentStatus === 'PUBLISHED'
   )
