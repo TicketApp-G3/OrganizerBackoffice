@@ -30,11 +30,38 @@ export function EventRouter() {
     )
   )
 
+  router.patch(
+    '/:eventId',
+    registerHandler(
+      (req: Request<void, { eventId: string }>) =>
+      eventController.updateEvent(req),
+    StatusCodes.OK
+    )
+  )
+
   router.post(
     '/:eventId/publish',
     registerHandler(
       (req: Request<void, { eventId: string }>) =>
         eventController.publishEvent(req),
+      StatusCodes.OK
+    )
+  )
+
+  router.post(
+    '/:eventId/cancel',
+    registerHandler(
+      (req: Request<void, { eventId: string }>) =>
+        eventController.cancelEvent(req),
+      StatusCodes.OK
+    )
+  )
+
+  router.post(
+    '/:eventId/delete',
+    registerHandler(
+      (req: Request<void, { eventId: string }>) =>
+        eventController.deleteEvent(req),
       StatusCodes.OK
     )
   )

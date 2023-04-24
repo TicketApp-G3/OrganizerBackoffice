@@ -2,18 +2,11 @@ import { Request, Response } from '@shared'
 import pinoLogger from 'pino'
 import axios from 'axios'
 
-interface EventControllerInterface {
-  createEvent: (req: Request) => Promise<any>
-  getOwnEvents: (req: Request) => Promise<any>
-  getEventById: (req: Request) => Promise<any>
-  publishEvent: (req: Request) => Promise<any>
-}
-
 const BASE_URL = "https://ticket-app-ms-events.onrender.com" // PROD
 // const BASE_URL = 'http://event_ms:8080'  // LOCAL
 
 
-class EventController implements EventControllerInterface {
+class EventController {
   private logger
 
   constructor() {
@@ -22,6 +15,11 @@ class EventController implements EventControllerInterface {
 
   public async createEvent(req: Request): Promise<any> {
     const response = await axios.post(`${BASE_URL}/events`, req.body)
+    return response.data
+  }
+
+  public async updateEvent(req: Request): Promise<any> {
+    const response = await axios.patch(`${BASE_URL}/events/${req.params.eventId}`, req.body)
     return response.data
   }
 
@@ -48,8 +46,28 @@ class EventController implements EventControllerInterface {
     )
     return response.data
   }
+
+  public async cancelEvent(req: Request): Promise<any> {
+    const response = await axios.patch(
+      `${BASE_URL}/events/${req.params.eventId}`,
+      {
+        status: 'CANCELLED',
+      }
+    )
+    return response.data
+  }
+
+  public async deleteEvent(req: Request): Promise<any> {
+    const response = await axios.patch(
+      `${BASE_URL}/events/${req.params.eventId}`,
+      {
+        status: 'DELETED',
+      }
+    )
+    return response.data
+  }
 }
 
-const eventController: EventControllerInterface = new EventController()
+const eventController: EventController = new EventController()
 
 export { EventController, eventController }
