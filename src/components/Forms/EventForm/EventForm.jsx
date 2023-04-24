@@ -55,8 +55,7 @@ const EventForm = ({ initialValues, onSubmit }) => {
   })
   const [currentStatus, setCurrentStatus] = useState(initialValues?.status)
   const [canChangeStatus, setCanChangeStatus] = useState(
-    initialValues?.status !== 'COMPLETED' &&
-      initialValues?.status !== 'CANCELED'
+    currentStatus === 'DRAFT' || currentStatus === 'PUBLISHED'
   )
 
   const changeEventStatus = () => {
@@ -70,8 +69,9 @@ const EventForm = ({ initialValues, onSubmit }) => {
           message: 'El evento fue publicado!',
           color: 'teal',
         })
-        if (nextStatus === 'COMPLETED' || nextStatus === 'CANCELED')
-          setCanChangeStatus(true)
+        setCanChangeStatus(
+          currentStatus === 'DRAFT' || currentStatus === 'PUBLISHED'
+        )
       },
     })
   }
@@ -110,7 +110,7 @@ const EventForm = ({ initialValues, onSubmit }) => {
       <Flex gap={20}>
         {initialValues && canChangeStatus && (
           <Button fullWidth variant="outline" onClick={changeEventStatus}>
-            {EVENT_STATUSES[currentStatus].label}
+            {EVENT_STATUSES[currentStatus]?.label}
           </Button>
         )}
         <Button
@@ -121,7 +121,7 @@ const EventForm = ({ initialValues, onSubmit }) => {
         >
           {initialValues
             ? !canChangeStatus
-              ? 'Evento Finalizado'
+              ? 'Ya no se pueden realizar cambios'
               : 'Guardar cambios '
             : 'Crear evento'}
         </Button>
