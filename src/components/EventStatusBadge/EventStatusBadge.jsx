@@ -10,11 +10,15 @@ const eventStatus = {
     label: 'PUBLICADO',
     color: 'blue',
   },
+  CANCELED: {
+    label: 'CANCELADO',
+    color: 'red',
+  },
   IN_PROGRESS: {
     label: 'EN CURSO',
     color: 'green',
   },
-  FINISHED: {
+  COMPLETED: {
     label: 'FINALIZADO',
     color: 'red',
   },

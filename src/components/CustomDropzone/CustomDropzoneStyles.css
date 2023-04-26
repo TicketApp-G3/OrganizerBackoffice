@@ -1,19 +1,5 @@
 .imageContainer {
   position: relative;
-  width: 98%;
-}
-
-.image {
-  height: 300px;
-  object-fit: cover;
-}
-
-.deleteImageButton {
-  position: absolute;
-  top: 0;
-  right: 10px;
-  height: 30px;
-  width: 30px;
-  background-color: red;
-  border-radius: 10px;
+  max-width: 300px;
+  max-height: 325px;
 }

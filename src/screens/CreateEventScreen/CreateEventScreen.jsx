@@ -1,47 +1,34 @@
 import React from 'react'
 import './CreateEventScreenStyles.css'
-import { useForm } from '@mantine/form'
-import { Accordion, Box, Button, Space, Title } from '@mantine/core'
+import { Space, Title } from '@mantine/core'
 import { useNavigate } from 'react-router'
 import { notifications } from '@mantine/notifications'
-import BasicEventForm from '../../components/Forms/BasicEventForm'
-import ScheduleEventForm from '../../components/Forms/ScheduleEventForm/ScheduleEventForm'
-import FaqsEventForm from '../../components/Forms/FaqsEventForm/FaqsEventForm'
 import apiProvider from '../../api/apiProvider'
+import EventForm from '../../components/Forms/EventForm/EventForm'
 
 const CreateEventScreen = () => {
   const navigate = useNavigate()
 
-  const formState = useForm({
-    initialValues: {
-      title: '',
-      type: '',
-      dateTime: '',
-      description: '',
-      capacity: 0,
-      location: {
-        address: '',
-        latitude: '',
-        longitude: '',
-      },
-      status: 'draft',
-      images: [],
-      schedule: [],
-      faqs: [],
-    },
-  })
+  const onSubmit = async (errors, values, hasErrors) => {
+    if (hasErrors) {
+      notifications.show({
+        title: 'Complete los campos obligatorios',
+        color: 'red',
+      })
+      return
+    }
 
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    const { location, dateTime, capacity, ...data } = formState.values
+    const { location, timeFrom, timeTo, capacity, status, ...data } = values
+
     const eventData = {
-      dateTime: dateTime ? dateTime.toISOString() : '',
+      timeFrom: timeFrom ? timeFrom.toISOString() : '',
+      timeTo: timeTo ? timeTo.toISOString() : '',
       capacity: parseInt(capacity, 10),
       ...location,
       ...data,
     }
 
-    await apiProvider().createEvent({
+    apiProvider().createEvent({
       eventData,
       onSuccess: () => {
         notifications.show({
@@ -60,46 +47,11 @@ const CreateEventScreen = () => {
     })
   }
 
-  const sections = [
-    {
-      value: 'information',
-      title: 'Información del evento',
-      Form: BasicEventForm,
-    },
-    {
-      value: 'schedule',
-      title: 'Agenda',
-      Form: ScheduleEventForm,
-    },
-    {
-      value: 'faqs',
-      title: 'FAQs',
-      Form: FaqsEventForm,
-    },
-  ]
-
   return (
     <>
       <Title>Creación de un evento</Title>
       <Space h={24} />
-      <Box w={{ md: 700 }} className="createEventContainer">
-        <Accordion defaultValue="information" transitionDuration={500}>
-          {sections.map(({ value, title, Form }) => (
-            <Accordion.Item value={value} key={value}>
-              <Accordion.Control>
-                <b>{title}</b>
-              </Accordion.Control>
-              <Accordion.Panel>
-                <Form formState={formState} />
-              </Accordion.Panel>
-            </Accordion.Item>
-          ))}
-        </Accordion>
-
-        <Button form="createEventForm" type="submit" onClick={onSubmit}>
-          Crear evento
-        </Button>
-      </Box>
+      <EventForm onSubmit={onSubmit} />
     </>
   )
 }

@@ -2,8 +2,8 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { useState } from 'react'
 import { storage } from '../../firebase'
 
-export const useImagesUploader = () => {
-  const [imagesUrls, setImagesUrls] = useState([])
+export const useImagesUploader = ({ initialImages = [] }) => {
+  const [imagesUrls, setImagesUrls] = useState(initialImages)
 
   const uploadFiles = (fileList) => {
     Object.values(fileList).forEach((file) => {

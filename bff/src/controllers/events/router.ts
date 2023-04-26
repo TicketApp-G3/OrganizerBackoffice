@@ -1,15 +1,14 @@
-import { registerHandler, validateDto, Request } from '@shared'
+import { registerHandler, validateSchema, Request, FieldOptions } from '@shared'
 import { Router } from 'express'
 import { eventController } from './controller'
-import { EventCreationDTO, GetOwnEvents } from './dtos'
+import { EventCreationDTOSchema, GetOwnEventsSchema } from './dtos'
 import { StatusCodes } from 'http-status-codes'
 
 export function EventRouter() {
   const router = Router()
-  console.log('EventRouter')
   router.post(
     '/',
-    validateDto(EventCreationDTO),
+    validateSchema(EventCreationDTOSchema, [FieldOptions.body]),
     registerHandler(
       (req) => eventController.createEvent(req),
       StatusCodes.CREATED
@@ -18,7 +17,7 @@ export function EventRouter() {
 
   router.get(
     '/own',
-    validateDto(GetOwnEvents, 'query'),
+    validateSchema(GetOwnEventsSchema, [FieldOptions.query]),
     registerHandler((req) => eventController.getOwnEvents(req), StatusCodes.OK)
   )
 
@@ -27,6 +26,42 @@ export function EventRouter() {
     registerHandler(
       (req: Request<void, { eventId: string }>) =>
         eventController.getEventById(req),
+      StatusCodes.OK
+    )
+  )
+
+  router.patch(
+    '/:eventId',
+    registerHandler(
+      (req: Request<void, { eventId: string }>) =>
+      eventController.updateEvent(req),
+    StatusCodes.OK
+    )
+  )
+
+  router.post(
+    '/:eventId/publish',
+    registerHandler(
+      (req: Request<void, { eventId: string }>) =>
+        eventController.publishEvent(req),
+      StatusCodes.OK
+    )
+  )
+
+  router.post(
+    '/:eventId/cancel',
+    registerHandler(
+      (req: Request<void, { eventId: string }>) =>
+        eventController.cancelEvent(req),
+      StatusCodes.OK
+    )
+  )
+
+  router.post(
+    '/:eventId/delete',
+    registerHandler(
+      (req: Request<void, { eventId: string }>) =>
+        eventController.deleteEvent(req),
       StatusCodes.OK
     )
   )

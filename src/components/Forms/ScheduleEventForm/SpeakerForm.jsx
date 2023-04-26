@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   Button,
   Flex,
@@ -7,12 +8,9 @@ import {
   useMantineTheme,
 } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import React, { useState } from 'react'
 import { TimeInput } from '@mantine/dates'
-import SpeakInfo from './SpeakInfo'
 
 const SpeakerForm = ({ onSubmit }) => {
-  const [submited, setSubmited] = useState(false)
   const theme = useMantineTheme()
 
   const formState = useForm({
@@ -20,56 +18,58 @@ const SpeakerForm = ({ onSubmit }) => {
       presenter: '',
       title: '',
       description: '',
-      image: '',
       timeFrom: '',
       timeTo: '',
     },
   })
 
   const handleSubmit = (values) => {
-    setSubmited(true)
+    formState.reset()
     onSubmit(values)
   }
 
   return (
     <form onSubmit={formState.onSubmit(handleSubmit)}>
-      {submited ? (
-        <SpeakInfo data={formState.values} />
-      ) : (
+      <Flex
+        direction="column"
+        gap={10}
+        className="formContainer"
+        style={{ borderColor: theme.colors.gray[5] }}
+      >
+        <TextInput label="Nombre" {...formState.getInputProps('presenter')} />
+        <TextInput label="Título" {...formState.getInputProps('title')} />
+        <Textarea
+          label="Descripción"
+          {...formState.getInputProps('description')}
+        />
         <Flex
-          direction="column"
-          gap={10}
-          className="formContainer"
-          style={{ borderColor: theme.colors.gray[5] }}
+          gap={16}
+          direction={{ 0: 'column', md: 'row' }}
+          justify="space-between"
         >
-          <TextInput
-            label="Nombre"
-            readOnly={submited}
-            {...formState.getInputProps('presenter')}
-          />
-          <TextInput
-            label="Título"
-            readOnly={submited}
-            {...formState.getInputProps('title')}
-          />
-          <Textarea
-            label="Descripción"
-            readOnly={submited}
-            {...formState.getInputProps('description')}
-          />
           <TimeInput
+            w="100%"
             label="Hora de inicio"
             locale="es"
             size="sm"
             {...formState.getInputProps('timeFrom')}
           />
-          <Group position="right" mt="md">
-            <Button variant="outline" type="submit">
-              Agregar
-            </Button>
-          </Group>
+
+          <TimeInput
+            w="100%"
+            label="Hora de Finalización"
+            locale="es"
+            size="sm"
+            {...formState.getInputProps('timeTo')}
+          />
         </Flex>
-      )}
+
+        <Group position="right" mt="md">
+          <Button variant="outline" type="submit">
+            Agregar
+          </Button>
+        </Group>
+      </Flex>
     </form>
   )
 }

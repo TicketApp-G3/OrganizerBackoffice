@@ -7,11 +7,19 @@ import CustomDropzone from '../CustomDropzone/CustomDropzone'
 
 const INPUT_SIZE = 'sm'
 
-const BasicEventForm = ({ formState }) => {
+const BasicEventForm = ({ formState, onSubmit }) => {
   const theme = useMantineTheme()
 
+  const handleSubmit = (errors, values) => {
+    const hasErrors = Object.values(errors).some((error) => !!error)
+    onSubmit(errors, values, hasErrors)
+  }
+
   return (
-    <form id="createEventForm">
+    <form
+      id="createEventForm"
+      onSubmit={formState.onSubmit(() => {}, handleSubmit)}
+    >
       <Flex
         direction="column"
         gap={16}
@@ -22,42 +30,37 @@ const BasicEventForm = ({ formState }) => {
           withAsterisk
           label="Título"
           placeholder="Ingrese el título del evento"
-          {...formState.getInputProps('title')}
           size={INPUT_SIZE}
+          {...formState.getInputProps('title')}
         />
 
         <PlacesSearchBox
+          withAsterisk
           label="Ubicación"
-          withAsterisk
           placeholder="Seleccione la ubicación"
+          size={INPUT_SIZE}
           {...formState.getInputProps('location')}
-          size={INPUT_SIZE}
+          value={formState.values.location.address}
         />
 
-        <Select
-          label="Tipo de evento"
-          withAsterisk
-          placeholder="Seleccione el tipo de evento"
-          {...formState.getInputProps('type')}
-          data={[
-            { value: 'CONFERENCE', label: 'Conferencia' },
-            { value: 'CONCERT', label: 'Concierto' },
-            { value: 'DISCOTEC', label: 'Boliche' },
-            { value: 'STAND_UP', label: 'Stand Up' },
-          ]}
-          size={INPUT_SIZE}
-        />
-
-        <Flex gap={16} justify="space-between">
-          <DateTimePicker
-            w="100%"
-            label="Fecha de inicio del evento"
+        <Flex
+          gap={16}
+          direction={{ 0: 'column', md: 'row' }}
+          justify="space-between"
+        >
+          <Select
             withAsterisk
-            placeholder="Seleccione una fecha"
-            locale="es"
-            labelProps={{ size: 14 }}
-            size="xs"
-            {...formState.getInputProps('dateTime')}
+            label="Tipo de evento"
+            w="100%"
+            placeholder="Seleccione el tipo de evento"
+            data={[
+              { value: 'CONFERENCE', label: 'Conferencia' },
+              { value: 'CONCERT', label: 'Concierto' },
+              { value: 'DISCOTEC', label: 'Boliche' },
+              { value: 'STAND_UP', label: 'Stand Up' },
+            ]}
+            size={INPUT_SIZE}
+            {...formState.getInputProps('type')}
           />
 
           <TextInput
@@ -66,18 +69,54 @@ const BasicEventForm = ({ formState }) => {
             label="Cantidad de entradas"
             type="number"
             placeholder="Ingrese una cantidad"
-            {...formState.getInputProps('capacity')}
             size={INPUT_SIZE}
+            {...formState.getInputProps('capacity')}
+          />
+        </Flex>
+
+        <Flex
+          gap={16}
+          direction={{ 0: 'column', md: 'row' }}
+          justify="space-between"
+        >
+          <DateTimePicker
+            w="100%"
+            label="Fecha de inicio del evento"
+            withAsterisk
+            placeholder="Seleccione una fecha"
+            locale="es"
+            hideOutsideDates
+            minDate={new Date()}
+            maxDate={formState.values.timeTo}
+            labelProps={{ size: 14 }}
+            size="xs"
+            {...formState.getInputProps('timeFrom')}
+          />
+
+          <DateTimePicker
+            w="100%"
+            label="Fecha de finalización del evento"
+            withAsterisk
+            placeholder="Seleccione una fecha"
+            locale="es"
+            hideOutsideDates
+            minDate={formState.values.timeFrom || new Date()}
+            labelProps={{ size: 14 }}
+            size="xs"
+            {...formState.getInputProps('timeTo')}
           />
         </Flex>
 
         <CustomRichTextEditor
           label="Descripción"
-          {...formState.getInputProps('description')}
           size={INPUT_SIZE}
+          {...formState.getInputProps('description')}
         />
 
-        <CustomDropzone {...formState.getInputProps('images')} />
+        <CustomDropzone
+          initialImages={formState.values.images}
+          {...formState.getInputProps('images')}
+        />
       </Flex>
     </form>
   )

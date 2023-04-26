@@ -1,22 +1,33 @@
 import React, { useState } from 'react'
 import { Flex } from '@mantine/core'
 import SpeakerForm from './SpeakerForm'
+import SpeakInfo from './SpeakInfo'
 
 const ScheduleEventForm = ({ formState }) => {
-  const [speak, setSpeak] = useState([])
-  const [speaksAmount, setSpeaksAmount] = useState(1)
+  const [speakers, setSpeakers] = useState(formState.values.schedule)
 
   const handleAddSpeak = (speakInfo) => {
-    setSpeak((prevState) => [...prevState, speakInfo])
-    formState.getInputProps('schedule').onChange([...speak, speakInfo])
-    setSpeaksAmount(speaksAmount + 1)
+    setSpeakers((prevState) => [...prevState, speakInfo])
+    formState.getInputProps('schedule').onChange([...speakers, speakInfo])
+  }
+
+  const handleDeleteSpeak = (index) => {
+    const speakersCopy = [...speakers]
+    speakersCopy.splice(index, 1)
+    setSpeakers(speakersCopy)
+    formState.getInputProps('schedule').onChange(speakersCopy)
   }
 
   return (
     <Flex gap={14} direction="column">
-      {[...Array(speaksAmount)].map((_, index) => (
-        <SpeakerForm key={index} onSubmit={handleAddSpeak} />
+      {speakers.map((speaker, index) => (
+        <SpeakInfo
+          speaker={speaker}
+          key={index}
+          onDelete={() => handleDeleteSpeak(index)}
+        />
       ))}
+      <SpeakerForm onSubmit={handleAddSpeak} />
     </Flex>
   )
 }

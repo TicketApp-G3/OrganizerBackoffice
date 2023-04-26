@@ -1,56 +1,33 @@
-import {
-  IsNotEmpty,
-  IsPositive,
-  IsString,
-  IsUrl,
-  IsDate,
-  IsOptional,
-  IsNumber,
-  IsLatitude,
-  IsLongitude,
-} from "class-validator";
-import { Type } from "class-transformer";
+import Joi from 'joi'
 
 export class EventCreationDTO {
-  @IsString()
-  @IsNotEmpty()
-  title: string;
-
-  @IsString()
-  @IsOptional()
-  description: string;
-
-  @IsNumber()
-  @IsLatitude()
-  @IsNotEmpty()
-  latitude: number;
-
-  @IsNumber()
-  @IsLongitude()
-  @IsNotEmpty()
-  longitude: number;
-
-  @IsString()
-  @IsNotEmpty()
-  address: string;
-
-  @IsString()
-  @IsOptional()
-  place: string;
-
-  @IsString()
-  @IsNotEmpty()
-  type: string;
-
-  @Type(() => Date)
-  @IsDate()
-  @IsNotEmpty()
-  dateTime: Date;
-
-  @IsUrl(undefined, { each: true })
-  images: string[];
-
-  @IsPositive()
-  @IsNotEmpty()
-  capacity: number;
+  title: string
+  description: string
+  latitude: number
+  longitude: number
+  address: string
+  place: string
+  type: string
+  timeFrom: Date
+  timeTo: Date
+  images: string[]
+  capacity: number
+  faqs: Object[]
+  schedule: Object[]
 }
+
+export const EventCreationDTOSchema = Joi.object({
+  title: Joi.string().required(),
+  description: Joi.string().optional(),
+  latitude: Joi.number().required(),
+  longitude: Joi.number().required(),
+  address: Joi.string().required(),
+  place: Joi.string().optional(),
+  type: Joi.string().required(),
+  timeFrom: Joi.date().required(),
+  timeTo: Joi.date().required(),
+  images: Joi.array().required(),
+  capacity: Joi.number().positive().required(),
+  faqs: Joi.array().optional(),
+  schedule: Joi.array().optional(),
+})

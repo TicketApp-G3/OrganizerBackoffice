@@ -1,4 +1,4 @@
-import { ActionIcon, Group, Text, useMantineTheme } from '@mantine/core'
+import { ActionIcon, Group, Image, Text, useMantineTheme } from '@mantine/core'
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone'
 import { IconPhoto, IconTrash, IconUpload, IconX } from '@tabler/icons-react'
 import React, { useEffect } from 'react'
@@ -6,10 +6,12 @@ import { Carousel } from '@mantine/carousel'
 import { useImagesUploader } from '../../hooks/useImagesUploader'
 import './CustomDropzoneStyles.css'
 
-const CustomDropzone = ({ onChange }) => {
+const CustomDropzone = ({ onChange, initialImages }) => {
   const theme = useMantineTheme()
 
-  const { uploadImages, handleDeleteImage, imagesUrls } = useImagesUploader()
+  const { uploadImages, handleDeleteImage, imagesUrls } = useImagesUploader({
+    initialImages,
+  })
 
   useEffect(() => onChange(imagesUrls), [imagesUrls])
 
@@ -61,33 +63,22 @@ const CustomDropzone = ({ onChange }) => {
       </Dropzone>
       {!!imagesUrls.length && (
         <Carousel
-          withIndicators
-          height={200}
-          slideSize="70%"
-          slideGap="xl"
-          dragFree
-          align="start"
+          align="center"
+          mah={600}
           slidesToScroll={1}
-          mt={24}
-          styles={{
-            control: {
-              '&[data-inactive]': {
-                opacity: 0,
-                cursor: 'default',
-              },
-            },
-          }}
+          dragFree
+          slideGap="xs"
         >
           {imagesUrls.map((imageURL) => (
-            <div key={imageURL} className="imageContainer">
-              <img src={imageURL} alt="img" className="image" />
+            <Carousel.Slide key={imageURL} className="imageContainer">
+              <Image src={imageURL} alt="img" />
               <ActionIcon
                 onClick={() => handleDeleteImage(imageURL)}
                 className="deleteImageButton"
               >
                 <IconTrash variant="filled" size={24} color="white" />
               </ActionIcon>
-            </div>
+            </Carousel.Slide>
           ))}
         </Carousel>
       )}

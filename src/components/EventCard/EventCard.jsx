@@ -1,11 +1,14 @@
-import { Badge, Box, Card, Group, Image, Text } from '@mantine/core'
+import { Box, Card, Group, Image, Text } from '@mantine/core'
 import React from 'react'
+import { useNavigate } from 'react-router'
 import { dateFormatter } from '../../utils/formatters'
-import './EventCardStyles.css'
 import EventStatusBadge from '../EventStatusBadge/EventStatusBadge'
+import './EventCardStyles.css'
+import EventTypeBadge from '../EventTypeBadge/EventTypeBadge'
 
 const EventCard = ({ event }) => {
-  const { images, title, address, date, type, id, status } = event
+  const { images, title, address, timeFrom, type, id, status } = event
+  const navigate = useNavigate()
 
   return (
     <Card
@@ -15,7 +18,7 @@ const EventCard = ({ event }) => {
       withBorder
       key={id}
       component="a"
-      href={`/dashboard/myEvents/event/${id}`}
+      onClick={() => navigate(`/dashboard/myEvents/event/${id}`)}
       className="cardContainer"
     >
       <Card.Section>
@@ -29,16 +32,13 @@ const EventCard = ({ event }) => {
       <Box className="cardContent">
         <Group position="apart" mt="md" mb="xs">
           <Text weight="bold">{title}</Text>
-          <Text weight="bold">{dateFormatter(date)}</Text>
+          <Text weight="bold">{dateFormatter(timeFrom)}</Text>
         </Group>
 
         <Text>{address}</Text>
 
         <Group position="apart" mt="md" mb="xs">
-          <Badge color="gray" variant="light">
-            {type}
-          </Badge>
-
+          <EventTypeBadge type={type} />
           <EventStatusBadge status={status} />
         </Group>
       </Box>
