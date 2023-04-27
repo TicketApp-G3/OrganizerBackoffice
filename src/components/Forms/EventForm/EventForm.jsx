@@ -41,7 +41,7 @@ const EVENT_STATUSES = {
   },
 }
 
-const EventForm = ({ initialValues, onSubmit }) => {
+const EventForm = ({ initialValues, onSubmit, submiting }) => {
   const formState = useForm({
     initialValues: initialValues || DEFAULT_FORM_VALUES,
     validate: {
@@ -96,6 +96,12 @@ const EventForm = ({ initialValues, onSubmit }) => {
     },
   ]
 
+  const buttonText = initialValues
+    ? !canChangeStatus
+      ? 'Ya no se pueden realizar cambios'
+      : 'Guardar cambios '
+    : 'Crear evento'
+
   return (
     <Box w={{ md: 700 }} className="createEventContainer">
       <Accordion defaultValue="information" transitionDuration={500}>
@@ -120,12 +126,9 @@ const EventForm = ({ initialValues, onSubmit }) => {
           fullWidth
           form="createEventForm"
           type="submit"
+          loading={submiting}
         >
-          {initialValues
-            ? !canChangeStatus
-              ? 'Ya no se pueden realizar cambios'
-              : 'Guardar cambios '
-            : 'Crear evento'}
+          {buttonText}
         </Button>
       </Flex>
     </Box>
