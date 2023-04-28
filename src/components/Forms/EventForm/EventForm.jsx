@@ -41,7 +41,7 @@ const EVENT_STATUSES = {
   },
 }
 
-const EventForm = ({ initialValues, onSubmit, submiting }) => {
+const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
   const formState = useForm({
     initialValues: initialValues || DEFAULT_FORM_VALUES,
     validate: {
@@ -86,19 +86,14 @@ const EventForm = ({ initialValues, onSubmit, submiting }) => {
         <BasicEventForm
           formState={formState}
           onSubmit={onSubmit}
-          canEdit={initialValues?.canEdit}
+          canEdit={canEdit}
         />
       ),
     },
     {
       value: 'schedule',
       title: 'Agenda',
-      Form: (
-        <ScheduleEventForm
-          formState={formState}
-          canEdit={initialValues?.canEdit}
-        />
-      ),
+      Form: <ScheduleEventForm formState={formState} canEdit={canEdit} />,
     },
     {
       value: 'faqs',
