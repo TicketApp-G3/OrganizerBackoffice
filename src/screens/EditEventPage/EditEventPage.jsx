@@ -16,8 +16,15 @@ const EditEventPage = () => {
     await apiProvider().getEventById({
       eventId,
       onSuccess: (data) => {
-        const { latitude, longitude, address, timeFrom, timeTo, ...restData } =
-          data
+        const {
+          latitude,
+          longitude,
+          address,
+          timeFrom,
+          timeTo,
+          status,
+          ...restData
+        } = data
         const formattedData = {
           ...restData,
           timeFrom: new Date(timeFrom),
@@ -27,6 +34,8 @@ const EditEventPage = () => {
             longitude,
             address,
           },
+          status,
+          canEdit: status === 'DRAFT',
         }
         setEvent(formattedData)
         setIsLoading(false)
@@ -47,15 +56,29 @@ const EditEventPage = () => {
       return
     }
 
-    const { location, timeFrom, timeTo, capacity, status, id, count, ...data } =
-      values
+    const {
+      location,
+      timeFrom,
+      timeTo,
+      capacity,
+      status,
+      description,
+      id,
+      count,
+      faqs,
+      images,
+      ...data
+    } = values
 
     const eventData = {
       timeFrom: timeFrom ? timeFrom.toISOString() : '',
       timeTo: timeTo ? timeTo.toISOString() : '',
       capacity: parseInt(capacity, 10),
+      description,
+      images,
+      faqs,
       ...location,
-      ...data,
+      ...(event.canEdit && { ...data }),
     }
 
     apiProvider().editEvent({

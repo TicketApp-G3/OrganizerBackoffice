@@ -7,7 +7,7 @@ import CustomDropzone from '../CustomDropzone/CustomDropzone'
 
 const INPUT_SIZE = 'sm'
 
-const BasicEventForm = ({ formState, onSubmit }) => {
+const BasicEventForm = ({ formState, onSubmit, canEdit }) => {
   const theme = useMantineTheme()
 
   const handleSubmit = (errors, values) => {
@@ -31,6 +31,7 @@ const BasicEventForm = ({ formState, onSubmit }) => {
           label="Título"
           placeholder="Ingrese el título del evento"
           size={INPUT_SIZE}
+          disabled={!canEdit}
           {...formState.getInputProps('title')}
         />
 
@@ -60,6 +61,7 @@ const BasicEventForm = ({ formState, onSubmit }) => {
               { value: 'STAND_UP', label: 'Stand Up' },
             ]}
             size={INPUT_SIZE}
+            disabled={!canEdit}
             {...formState.getInputProps('type')}
           />
 

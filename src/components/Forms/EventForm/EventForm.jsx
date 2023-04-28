@@ -82,12 +82,23 @@ const EventForm = ({ initialValues, onSubmit, submiting }) => {
     {
       value: 'information',
       title: 'Información del evento',
-      Form: <BasicEventForm formState={formState} onSubmit={onSubmit} />,
+      Form: (
+        <BasicEventForm
+          formState={formState}
+          onSubmit={onSubmit}
+          canEdit={initialValues?.canEdit}
+        />
+      ),
     },
     {
       value: 'schedule',
       title: 'Agenda',
-      Form: <ScheduleEventForm formState={formState} />,
+      Form: (
+        <ScheduleEventForm
+          formState={formState}
+          canEdit={initialValues?.canEdit}
+        />
+      ),
     },
     {
       value: 'faqs',
