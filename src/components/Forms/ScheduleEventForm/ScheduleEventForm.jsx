@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Flex } from '@mantine/core'
+import { Flex, Text } from '@mantine/core'
 import SpeakerForm from './SpeakerForm'
 import SpeakInfo from './SpeakInfo'
 
-const ScheduleEventForm = ({ formState }) => {
+const ScheduleEventForm = ({ formState, canEdit }) => {
   const [speakers, setSpeakers] = useState(formState.values.schedule)
 
   const handleAddSpeak = (speakInfo) => {
@@ -20,14 +20,19 @@ const ScheduleEventForm = ({ formState }) => {
 
   return (
     <Flex gap={14} direction="column">
-      {speakers.map((speaker, index) => (
-        <SpeakInfo
-          speaker={speaker}
-          key={index}
-          onDelete={() => handleDeleteSpeak(index)}
-        />
-      ))}
-      <SpeakerForm onSubmit={handleAddSpeak} />
+      {!speakers.length ? (
+        <Text>No hay agenda</Text>
+      ) : (
+        speakers.map((speaker, index) => (
+          <SpeakInfo
+            speaker={speaker}
+            key={index}
+            onDelete={() => handleDeleteSpeak(index)}
+            canEdit={canEdit}
+          />
+        ))
+      )}
+      {canEdit && <SpeakerForm onSubmit={handleAddSpeak} />}
     </Flex>
   )
 }

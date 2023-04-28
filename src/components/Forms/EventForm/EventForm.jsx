@@ -41,7 +41,7 @@ const EVENT_STATUSES = {
   },
 }
 
-const EventForm = ({ initialValues, onSubmit, submiting }) => {
+const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
   const formState = useForm({
     initialValues: initialValues || DEFAULT_FORM_VALUES,
     validate: {
@@ -82,12 +82,18 @@ const EventForm = ({ initialValues, onSubmit, submiting }) => {
     {
       value: 'information',
       title: 'Información del evento',
-      Form: <BasicEventForm formState={formState} onSubmit={onSubmit} />,
+      Form: (
+        <BasicEventForm
+          formState={formState}
+          onSubmit={onSubmit}
+          canEdit={canEdit}
+        />
+      ),
     },
     {
       value: 'schedule',
       title: 'Agenda',
-      Form: <ScheduleEventForm formState={formState} />,
+      Form: <ScheduleEventForm formState={formState} canEdit={canEdit} />,
     },
     {
       value: 'faqs',
