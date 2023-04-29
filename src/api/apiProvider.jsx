@@ -73,6 +73,15 @@ const apiProvider = () => {
     })
   }
 
+  const cancelEvent = async ({ eventId, onSuccess, onFailure }) => {
+    request({
+      method: 'post',
+      url: `/events/${eventId}/cancel`,
+      onSuccess,
+      onFailure,
+    })
+  }
+
   const health = async () => {
     request({
       method: 'get',
@@ -89,6 +98,7 @@ const apiProvider = () => {
     getMyEvents,
     getEventById,
     publishEvent,
+    cancelEvent,
   }
 }
 
