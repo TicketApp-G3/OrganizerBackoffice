@@ -1,8 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './MetricsScreenStyles.css'
+import { Button } from '@mantine/core'
+import { AuthContext } from '../../contexts/AuthProvider'
 
 const MetricsScreen = () => {
-  return <div className="container">MetricsScreen</div>
+  const { logout } = useContext(AuthContext)
+
+  return (
+    <div className="container">
+      <Button onClick={logout}>Cerrar sesión</Button>
+    </div>
+  )
 }
 
 export default MetricsScreen

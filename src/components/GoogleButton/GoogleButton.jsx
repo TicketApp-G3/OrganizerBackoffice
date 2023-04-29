@@ -1,9 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from '@mantine/core'
 import './GoogleButtonStyles.css'
+import { AuthContext } from '../../contexts/AuthProvider'
 
 const GoogleButton = () => {
-  return <Button className="buttonContainer">Google +</Button>
+  const { login } = useContext(AuthContext)
+  return (
+    <Button onClick={login} className="buttonContainer">
+      Google +
+    </Button>
+  )
 }
 
 export default GoogleButton
