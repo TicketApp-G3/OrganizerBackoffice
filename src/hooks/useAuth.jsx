@@ -1,15 +1,15 @@
 import { useState } from 'react'
 
 export const useAuth = () => {
-  const [isAuth, setIsAuth] = useState(true)
+  const [isLogged, setIsLogged] = useState(false)
 
   const login = () => {
-    setIsAuth(true)
+    setIsLogged(true)
   }
 
   const logout = () => {
-    setIsAuth(false)
+    setIsLogged(false)
   }
 
-  return { isAuth, login, logout }
+  return { isLogged, login, logout }
 }

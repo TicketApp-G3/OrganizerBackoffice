@@ -1,22 +1,41 @@
-import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import PrivateRoutes from './PrivateRoutes'
-import PublicRoutes from './PublicRoutes'
+import React, { useContext } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import DashboardLayout from './DashboardLayout'
+import { AuthContext } from '../contexts/AuthProvider'
+import LoginScreen from '../screens/LoginScreen/LoginScreen'
 
 const AppRouter = () => {
+  const { isLogged } = useContext(AuthContext)
+  console.log(isLogged)
+
+  // useEffect(() => {
+  //   firebase.auth().onAuthStateChanged(user => {
+  //     if (user) {
+  //       dispatch(login({
+  //         uid: user.uid,
+  //         userName: user.displayName,
+  //         email: user.email,
+  //         profilePic: user.photoURL,
+  //       }));
+  //     }
+  //     setChecking(false);
+  //   });
+  // }, [dispatch, setChecking]);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/*" element={<PublicRoutes />} />
-        <Route
-          path="/dashboard/*"
-          element={
-            <PrivateRoutes>
-              <DashboardLayout />
-            </PrivateRoutes>
-          }
-        />
+        {!isLogged ? (
+          <>
+            <Route path="/login" element={<LoginScreen />} />
+            <Route path="*" element={<Navigate to="/login" />} />
+          </>
+        ) : (
+          <>
+            <Route path="/dashboard/*" element={<DashboardLayout />} />
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   )
