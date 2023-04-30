@@ -16,8 +16,6 @@ const CustomNavbar = ({ opened }) => {
   const { loggedUser } = useContext(AuthContext)
   const { '*': activeSection } = useParams()
 
-  console.log(loggedUser)
-
   const sections = {
     createEvent: {
       label: 'Crear Evento',
