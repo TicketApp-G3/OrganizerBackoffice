@@ -13,7 +13,10 @@ export const useAuth = () => {
       if (user) {
         setloggedUser(user)
         setIsCheckingAuth(false)
-      } else setloggedUser(null)
+      } else {
+        setloggedUser(null)
+        setIsCheckingAuth(false)
+      }
     })
   }
 

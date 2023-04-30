@@ -7,7 +7,6 @@ import LoadingScreen from '../screens/LoadingScreen/LoadingScreen'
 
 const AppRouter = () => {
   const { isCheckingAuth, loggedUser } = useContext(AuthContext)
-  console.log(isCheckingAuth)
 
   return isCheckingAuth ? (
     <LoadingScreen />
