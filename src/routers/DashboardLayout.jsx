@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Route, Routes } from 'react-router'
+import { Navigate, Route, Routes } from 'react-router'
 import { AppShell, useMantineTheme } from '@mantine/core'
 import DashboardScreen from '../screens/DashboardScreen/DashboardScreen'
 import CustomNavbar from '../components/CustomNavbar/CustomNavbar'
@@ -43,6 +43,7 @@ const DashboardLayout = () => {
         <Route path="metrics" element={<MetricsScreen />} />
         <Route path="myEvents/event/:eventId" element={<EditEventPage />} />
         <Route path="/" element={<DashboardScreen />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </AppShell>
   )

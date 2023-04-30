@@ -29,8 +29,8 @@ const App = () => {
         withNormalizeCSS
         theme={{ colorScheme, ...customTheme }}
       >
+        <Notifications />
         <AuthProvider>
-          <Notifications />
           <AppRouter />
         </AuthProvider>
       </MantineProvider>

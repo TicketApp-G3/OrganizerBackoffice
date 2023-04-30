@@ -1,0 +1,32 @@
+.loginScreenContainer {
+  background-color: #4e598c;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  display: flex;
+}
+
+.card {
+  background-color: white;
+  width: 347px;
+  height: 236px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-radius: 8px;
+  flex-direction: column;
+  text-align: center;
+}
+
+.cardTitle {
+  color: #000000;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.cardText {
+  color: #616161;
+  font-weight: 300;
+  font-size: 15px;
+}

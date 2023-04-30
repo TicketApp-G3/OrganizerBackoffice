@@ -24,5 +24,6 @@ export const customTheme = {
     lg: '2px 2px 8px rgba(0, 0, 0, 0.25)',
     xl: '2px 2px 8px rgba(0, 0, 0, 0.25)',
   },
+  fontFamily: 'Archivo, sans-serif',
   datesLocale: 'es',
 }

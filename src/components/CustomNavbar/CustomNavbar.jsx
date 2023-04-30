@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './CustomNavbarStyles.css'
 import { NavLink, Navbar, Text } from '@mantine/core'
 import { useNavigate, useParams } from 'react-router'
@@ -8,9 +8,12 @@ import {
   IconTicket,
   IconChartInfographic,
 } from '@tabler/icons-react'
+import { AuthContext } from '../../contexts/AuthProvider'
+import NavbarUserInfo from '../NavbarUserInfo/NavbarUserInfo'
 
 const CustomNavbar = ({ opened }) => {
   const navigate = useNavigate()
+  const { loggedUser } = useContext(AuthContext)
   const { '*': activeSection } = useParams()
 
   const sections = {
@@ -56,6 +59,7 @@ const CustomNavbar = ({ opened }) => {
           onClick={() => handleSelect(path)}
         />
       ))}
+      <NavbarUserInfo user={loggedUser} />
     </Navbar>
   )
 }
