@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './CreateEventScreenStyles.css'
 import { Space, Title } from '@mantine/core'
 import { useNavigate } from 'react-router'
@@ -8,6 +8,7 @@ import EventForm from '../../components/Forms/EventForm/EventForm'
 
 const CreateEventScreen = () => {
   const navigate = useNavigate()
+  const [submiting, setSubmiting] = useState(false)
 
   const onSubmit = async (errors, values, hasErrors) => {
     if (hasErrors) {
@@ -28,6 +29,7 @@ const CreateEventScreen = () => {
       ...data,
     }
 
+    setSubmiting(true)
     apiProvider().createEvent({
       eventData,
       onSuccess: () => {
@@ -35,6 +37,7 @@ const CreateEventScreen = () => {
           title: 'Evento creado correctamente!',
           color: 'teal',
         })
+        setSubmiting(false)
         setTimeout(() => navigate('/'), 1000)
       },
       onFailure: ({ statusText }) => {
@@ -43,6 +46,7 @@ const CreateEventScreen = () => {
           message: statusText,
           color: 'red',
         })
+        setSubmiting(false)
       },
     })
   }
@@ -51,7 +55,7 @@ const CreateEventScreen = () => {
     <>
       <Title>Creación de un evento</Title>
       <Space h={24} />
-      <EventForm onSubmit={onSubmit} />
+      <EventForm onSubmit={onSubmit} submiting={submiting} />
     </>
   )
 }

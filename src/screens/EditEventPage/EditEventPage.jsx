@@ -10,14 +10,22 @@ const EditEventPage = () => {
   const navigate = useNavigate()
   const [event, setEvent] = useState({})
   const [isLoading, setIsLoading] = useState(true)
+  const [canEdit, setCanEdit] = useState(true)
   const { eventId } = useParams()
 
   const getEvent = async () => {
     await apiProvider().getEventById({
       eventId,
       onSuccess: (data) => {
-        const { latitude, longitude, address, timeFrom, timeTo, ...restData } =
-          data
+        const {
+          latitude,
+          longitude,
+          address,
+          timeFrom,
+          timeTo,
+          status,
+          ...restData
+        } = data
         const formattedData = {
           ...restData,
           timeFrom: new Date(timeFrom),
@@ -27,7 +35,9 @@ const EditEventPage = () => {
             longitude,
             address,
           },
+          status,
         }
+        setCanEdit(status === 'DRAFT')
         setEvent(formattedData)
         setIsLoading(false)
       },
@@ -47,15 +57,29 @@ const EditEventPage = () => {
       return
     }
 
-    const { location, timeFrom, timeTo, capacity, status, id, count, ...data } =
-      values
+    const {
+      location,
+      timeFrom,
+      timeTo,
+      capacity,
+      status,
+      description,
+      id,
+      count,
+      faqs,
+      images,
+      ...data
+    } = values
 
     const eventData = {
       timeFrom: timeFrom ? timeFrom.toISOString() : '',
       timeTo: timeTo ? timeTo.toISOString() : '',
       capacity: parseInt(capacity, 10),
+      description,
+      images,
+      faqs,
       ...location,
-      ...data,
+      ...(canEdit && { ...data }),
     }
 
     apiProvider().editEvent({
@@ -84,7 +108,7 @@ const EditEventPage = () => {
     <>
       <Title>Edición del evento: {event.title}</Title>
       <Space h={24} />
-      <EventForm onSubmit={onSubmit} initialValues={event} />
+      <EventForm onSubmit={onSubmit} initialValues={event} canEdit={canEdit} />
     </>
   )
 }

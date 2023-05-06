@@ -31,17 +31,13 @@ const DEFAULT_FORM_VALUES = {
 }
 
 const EVENT_STATUSES = {
-  DRAFT: {
-    label: 'Publicar evento',
-    nextStatus: 'PUBLISHED',
-  },
-  PUBLISHED: {
-    label: 'Cancelar evento',
-    nextStatus: 'CANCELED',
-  },
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  CANCELED: 'CANCELED',
 }
 
-const EventForm = ({ initialValues, onSubmit }) => {
+const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
+  const [changingStatus, setChangingStatus] = useState(false)
   const formState = useForm({
     initialValues: initialValues || DEFAULT_FORM_VALUES,
     validate: {
@@ -54,40 +50,74 @@ const EventForm = ({ initialValues, onSubmit }) => {
     },
   })
   const [currentStatus, setCurrentStatus] = useState(
-    initialValues?.status || 'DRAFT'
+    initialValues?.status || EVENT_STATUSES.DRAFT
   )
   const [canChangeStatus, setCanChangeStatus] = useState(
-    currentStatus === 'DRAFT' || currentStatus === 'PUBLISHED'
+    currentStatus === EVENT_STATUSES.DRAFT ||
+      currentStatus === EVENT_STATUSES.PUBLISHED
   )
 
-  const changeEventStatus = () => {
-    const { nextStatus } = EVENT_STATUSES[currentStatus]
+  const publishEvent = () => {
+    setChangingStatus(true)
     apiProvider().publishEvent({
       eventId: initialValues.id,
       onSuccess: () => {
-        setCurrentStatus(nextStatus)
+        setCurrentStatus(EVENT_STATUSES.PUBLISHED)
         notifications.show({
-          title: 'Error al editar el evento',
+          title: '¡Exito!',
           message: 'El evento fue publicado!',
           color: 'teal',
         })
-        setCanChangeStatus(
-          currentStatus === 'DRAFT' || currentStatus === 'PUBLISHED'
-        )
+        setCanChangeStatus(true)
       },
     })
+    setChangingStatus(false)
+  }
+
+  const cancelEvent = () => {
+    setChangingStatus(true)
+    apiProvider().cancelEvent({
+      eventId: initialValues.id,
+      onSuccess: () => {
+        setCurrentStatus(EVENT_STATUSES.CANCELED)
+        notifications.show({
+          title: '¡Exito!',
+          message: 'El evento fue cancelado!',
+          color: 'teal',
+        })
+        setCanChangeStatus(false)
+      },
+    })
+    setChangingStatus(false)
+  }
+
+  const submitButtonStatus = {
+    DRAFT: {
+      buttonLabel: 'Publicar evento',
+      onClick: publishEvent,
+    },
+    PUBLISHED: {
+      buttonLabel: 'Cancelar evento',
+      onClick: cancelEvent,
+    },
   }
 
   const sections = [
     {
       value: 'information',
       title: 'Información del evento',
-      Form: <BasicEventForm formState={formState} onSubmit={onSubmit} />,
+      Form: (
+        <BasicEventForm
+          formState={formState}
+          onSubmit={onSubmit}
+          canEdit={canEdit}
+        />
+      ),
     },
     {
       value: 'schedule',
       title: 'Agenda',
-      Form: <ScheduleEventForm formState={formState} />,
+      Form: <ScheduleEventForm formState={formState} canEdit={canEdit} />,
     },
     {
       value: 'faqs',
@@ -95,6 +125,12 @@ const EventForm = ({ initialValues, onSubmit }) => {
       Form: <FaqsEventForm formState={formState} />,
     },
   ]
+
+  const buttonText = initialValues
+    ? !canChangeStatus
+      ? 'Ya no se pueden realizar cambios'
+      : 'Guardar cambios '
+    : 'Crear evento'
 
   return (
     <Box w={{ md: 700 }} className="createEventContainer">
@@ -111,8 +147,13 @@ const EventForm = ({ initialValues, onSubmit }) => {
 
       <Flex gap={20}>
         {initialValues && canChangeStatus && (
-          <Button fullWidth variant="outline" onClick={changeEventStatus}>
-            {EVENT_STATUSES[currentStatus]?.label}
+          <Button
+            fullWidth
+            variant="outline"
+            onClick={submitButtonStatus[currentStatus]?.onClick}
+            loading={changingStatus}
+          >
+            {submitButtonStatus[currentStatus]?.buttonLabel}
           </Button>
         )}
         <Button
@@ -120,12 +161,9 @@ const EventForm = ({ initialValues, onSubmit }) => {
           fullWidth
           form="createEventForm"
           type="submit"
+          loading={submiting}
         >
-          {initialValues
-            ? !canChangeStatus
-              ? 'Ya no se pueden realizar cambios'
-              : 'Guardar cambios '
-            : 'Crear evento'}
+          {buttonText}
         </Button>
       </Flex>
     </Box>

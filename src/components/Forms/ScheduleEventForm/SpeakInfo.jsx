@@ -3,16 +3,17 @@ import React from 'react'
 import DeleteButton from '../../DeleteButton/DeleteButton'
 import './SpeakInfoStyles.css'
 
-const SpeakInfo = ({ speaker, onDelete }) => {
+const SpeakInfo = ({ speaker, onDelete, canEdit }) => {
   const theme = useMantineTheme()
 
   const { presenter, title, description, timeFrom, timeTo } = speaker
+
   return (
     <div
       className="formContainer"
       style={{ borderColor: theme.colors.gray[5] }}
     >
-      <DeleteButton onClick={onDelete} />
+      {canEdit && <DeleteButton onClick={onDelete} />}
       <Text>
         <b>Nombre:</b> {presenter}
       </Text>

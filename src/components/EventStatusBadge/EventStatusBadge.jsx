@@ -10,7 +10,7 @@ const eventStatus = {
     label: 'PUBLICADO',
     color: 'blue',
   },
-  CANCELED: {
+  CANCELLED: {
     label: 'CANCELADO',
     color: 'red',
   },
