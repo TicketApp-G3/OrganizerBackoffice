@@ -1,4 +1,9 @@
-import { GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth'
+import {
+  GoogleAuthProvider,
+  getAdditionalUserInfo,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth'
 import { useEffect, useState } from 'react'
 import { notifications } from '@mantine/notifications'
 import { auth } from '../../firebase'
@@ -7,11 +12,28 @@ export const useAuth = () => {
   const [loggedUser, setloggedUser] = useState()
   const [isCheckingAuth, setIsCheckingAuth] = useState(true)
 
+  const getUserData = (userData) => {
+    const { profile } = getAdditionalUserInfo(userData)
+
+    const formattedUserData = {
+      userId: profile.id,
+      name: profile.given_name,
+      lastName: profile.family_name,
+      email: profile.email,
+      profileImage: profile.picture,
+    }
+
+    localStorage.setItem('loggedUser', JSON.stringify(formattedUserData))
+    setloggedUser(formattedUserData)
+  }
+
   const checkUserIsAuth = async () => {
     setIsCheckingAuth(true)
+
     await auth.onAuthStateChanged((user) => {
       if (user) {
-        setloggedUser(user)
+        const localUser = localStorage.getItem('loggedUser')
+        setloggedUser(JSON.parse(localUser))
         setIsCheckingAuth(false)
       } else {
         setloggedUser(null)
@@ -21,11 +43,13 @@ export const useAuth = () => {
   }
 
   const login = async () => {
+    const googleProvider = new GoogleAuthProvider()
+    googleProvider.addScope('profile')
+    googleProvider.addScope('email')
+
     try {
-      const googleProvider = new GoogleAuthProvider()
-      const { user } = await signInWithPopup(auth, googleProvider)
-      localStorage.setItem('loggedUser', user)
-      setloggedUser(user)
+      const userData = await signInWithPopup(auth, googleProvider)
+      getUserData(userData)
     } catch (error) {
       notifications.show({
         title: 'Ocurrio un error al ingresar con Google',
