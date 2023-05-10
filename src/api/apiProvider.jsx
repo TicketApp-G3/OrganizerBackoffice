@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const apiProvider = () => {
-  const baseURL = 'http://localhost:8081'
+  const baseURL = 'http://localhost:8082'
 
   const request = async ({
     method,
@@ -41,6 +41,16 @@ const apiProvider = () => {
       method: 'patch',
       url: `/events/${eventId}`,
       body: eventData,
+      onSuccess,
+      onFailure,
+    })
+  }
+
+  const login = async ({ userData, onSuccess, onFailure }) => {
+    request({
+      method: 'post',
+      url: '/users',
+      body: userData,
       onSuccess,
       onFailure,
     })
@@ -99,6 +109,7 @@ const apiProvider = () => {
     getEventById,
     publishEvent,
     cancelEvent,
+    login,
   }
 }
 

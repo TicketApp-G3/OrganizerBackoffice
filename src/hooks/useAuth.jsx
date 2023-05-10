@@ -7,6 +7,7 @@ import {
 import { useEffect, useState } from 'react'
 import { notifications } from '@mantine/notifications'
 import { auth } from '../../firebase'
+import apiProvider from '../api/apiProvider'
 
 export const useAuth = () => {
   const [loggedUser, setloggedUser] = useState()
@@ -20,11 +21,21 @@ export const useAuth = () => {
       name: profile.given_name,
       lastName: profile.family_name,
       email: profile.email,
+    }
+
+    const pageUserDate = {
+      ...formattedUserData,
       profileImage: profile.picture,
     }
 
-    localStorage.setItem('loggedUser', JSON.stringify(formattedUserData))
-    setloggedUser(formattedUserData)
+    apiProvider().login({
+      userData: formattedUserData,
+      onSuccess: () => {
+        localStorage.setItem('loggedUser', JSON.stringify(pageUserDate))
+        setloggedUser(pageUserDate)
+      },
+      onFailure: () => setloggedUser(null),
+    })
   }
 
   const checkUserIsAuth = async () => {
