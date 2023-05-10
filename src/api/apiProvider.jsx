@@ -46,6 +46,16 @@ const apiProvider = () => {
     })
   }
 
+  const login = async ({ userData, onSuccess, onFailure }) => {
+    request({
+      method: 'post',
+      url: '/users',
+      body: userData,
+      onSuccess,
+      onFailure,
+    })
+  }
+
   const getMyEvents = async ({ userId, onSuccess, onFailure }) => {
     request({
       method: 'get',
@@ -99,6 +109,7 @@ const apiProvider = () => {
     getEventById,
     publishEvent,
     cancelEvent,
+    login,
   }
 }
 
