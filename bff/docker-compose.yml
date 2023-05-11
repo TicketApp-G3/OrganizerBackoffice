@@ -6,7 +6,7 @@ services:
     build: .
     # command: ./scripts/run.sh
     ports:
-      - '${APP_PORT:-8081}:8081'
+      - '${APP_PORT:-8082}:8082'
       - '9230:9230' # Debug port
     volumes:
       - ./src:/app/src

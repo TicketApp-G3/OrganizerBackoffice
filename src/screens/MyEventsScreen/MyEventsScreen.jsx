@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './MyEventsScreenStyles.css'
 import { SimpleGrid, Space, Text, Title } from '@mantine/core'
 import apiProvider from '../../api/apiProvider'
 import EventCard from '../../components/EventCard/EventCard'
+import { AuthContext } from '../../contexts/AuthProvider'
 
 const MyEventsScreen = () => {
   const [events, setEvents] = useState([])
+  const { loggedUser } = useContext(AuthContext)
 
   useEffect(() => {
     apiProvider().getMyEvents({
-      userId: 1,
+      userId: loggedUser.userId,
       onSuccess: (response) => setEvents(response),
       onFailure: (response) => console.log(response),
     })
