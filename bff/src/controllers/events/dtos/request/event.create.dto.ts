@@ -1,6 +1,7 @@
 import Joi from 'joi'
 
 export class EventCreationDTO {
+  ownerId: string
   title: string
   description: string
   latitude: number
@@ -17,6 +18,7 @@ export class EventCreationDTO {
 }
 
 export const EventCreationDTOSchema = Joi.object({
+  ownerId: Joi.string().required(),
   title: Joi.string().required(),
   description: Joi.string().optional(),
   latitude: Joi.number().required(),
