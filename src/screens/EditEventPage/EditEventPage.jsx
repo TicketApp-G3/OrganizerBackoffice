@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './EditEventPageStyles.css'
 import { useNavigate, useParams } from 'react-router'
 import { notifications } from '@mantine/notifications'
-import { Space, Title } from '@mantine/core'
+import { Space, Text, Title } from '@mantine/core'
+import { modals } from '@mantine/modals'
 import apiProvider from '../../api/apiProvider'
 import EventForm from '../../components/Forms/EventForm/EventForm'
 
@@ -102,13 +103,37 @@ const EditEventPage = () => {
     })
   }
 
+  const handleConfirmChanges = (errors, values, hasErrors) => {
+    if (values.status === 'PUBLISHED') {
+      modals.openConfirmModal({
+        title: 'Confirmación de cambios',
+        children: (
+          <Text size="sm">
+            Estos cambios serán notificados a los usuarios. ¿Estás seguro de que
+            quieres realizarlos?
+          </Text>
+        ),
+        labels: { confirm: 'Confirmar', cancel: 'Cancelar' },
+        onConfirm: () => {
+          onSubmit(errors, values, hasErrors)
+        },
+      })
+    } else {
+      onSubmit(errors, values, hasErrors)
+    }
+  }
+
   return isLoading ? (
     <div>Cargando</div>
   ) : (
     <>
       <Title>Edición del evento: {event.title}</Title>
       <Space h={24} />
-      <EventForm onSubmit={onSubmit} initialValues={event} canEdit={canEdit} />
+      <EventForm
+        onSubmit={handleConfirmChanges}
+        initialValues={event}
+        canEdit={canEdit}
+      />
     </>
   )
 }
