@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import './EventFormStyles.css'
-import { Accordion, Box, Button, Flex } from '@mantine/core'
+import { Accordion, Box, Button, Flex, Text } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { notifications } from '@mantine/notifications'
+import { modals } from '@mantine/modals'
+import { useNavigate } from 'react-router'
 import BasicEventForm from '../BasicEventForm'
 import ScheduleEventForm from '../ScheduleEventForm/ScheduleEventForm'
 import FaqsEventForm from '../FaqsEventForm/FaqsEventForm'
@@ -32,12 +34,14 @@ const DEFAULT_FORM_VALUES = {
 
 const EVENT_STATUSES = {
   DRAFT: 'DRAFT',
+  SUSPENDRAFT: 'SUSPENDRAFT',
   PUBLISHED: 'PUBLISHED',
   CANCELED: 'CANCELED',
 }
 
-const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
+const EventForm = ({ initialValues, onSubmit, submiting }) => {
   const [changingStatus, setChangingStatus] = useState(false)
+  const navigate = useNavigate()
   const formState = useForm({
     initialValues: initialValues || DEFAULT_FORM_VALUES,
     validate: {
@@ -49,12 +53,17 @@ const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
       capacity: capacityValidation,
     },
   })
+
   const [currentStatus, setCurrentStatus] = useState(
     initialValues?.status || EVENT_STATUSES.DRAFT
   )
+
+  const isDraft = currentStatus === 'DRAFT'
+  const isPublished = currentStatus === 'PUBLISHED'
+  const isSuspenDraft = currentStatus === 'SUSPENDRAFT'
+
   const [canChangeStatus, setCanChangeStatus] = useState(
-    currentStatus === EVENT_STATUSES.DRAFT ||
-      currentStatus === EVENT_STATUSES.PUBLISHED
+    isDraft || isPublished || isSuspenDraft
   )
 
   const publishEvent = () => {
@@ -93,13 +102,36 @@ const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
 
   const submitButtonStatus = {
     DRAFT: {
-      buttonLabel: 'Publicar evento',
+      buttonLabel: 'Publicar el evento',
+      modalTitle: 'Confirmación de publicación',
+      modalText: '¿Seguro que desea publicar el evento?',
+      onClick: publishEvent,
+    },
+    SUSPENDRAFT: {
+      buttonLabel: 'Re-Publicar el evento',
+      modalTitle: 'Confirmación de re publicación',
+      modalText: '¿Seguro que desea re publicar el evento?',
       onClick: publishEvent,
     },
     PUBLISHED: {
-      buttonLabel: 'Cancelar evento',
+      buttonLabel: 'Cancelar el evento',
+      modalTitle: 'Confirmación de cancelación',
+      modalText: '¿Seguro que desea cancelar el evento?',
       onClick: cancelEvent,
     },
+  }
+
+  const handleChangeState = () => {
+    const { onClick, modalTitle, modalText } = submitButtonStatus[currentStatus]
+    modals.openConfirmModal({
+      title: modalTitle,
+      children: <Text size="sm">{modalText}</Text>,
+      labels: { confirm: 'Confirmar', cancel: 'Cancelar' },
+      onConfirm: () => {
+        onClick()
+        navigate(`/dashboard/myEvents`)
+      },
+    })
   }
 
   const sections = [
@@ -110,24 +142,31 @@ const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
         <BasicEventForm
           formState={formState}
           onSubmit={onSubmit}
-          canEdit={canEdit}
+          isDraft={isDraft}
+          isPublished={isPublished}
         />
       ),
     },
     {
       value: 'schedule',
       title: 'Agenda',
-      Form: <ScheduleEventForm formState={formState} canEdit={canEdit} />,
+      Form: <ScheduleEventForm formState={formState} isDraft={isDraft} />,
     },
     {
       value: 'faqs',
       title: 'FAQs',
-      Form: <FaqsEventForm formState={formState} />,
+      Form: (
+        <FaqsEventForm
+          formState={formState}
+          isDraft={isDraft}
+          isPublished={isPublished}
+        />
+      ),
     },
   ]
 
   const buttonText = initialValues
-    ? !canChangeStatus
+    ? !isDraft && !isPublished
       ? 'Ya no se pueden realizar cambios'
       : 'Guardar cambios '
     : 'Crear evento'
@@ -150,21 +189,22 @@ const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
           <Button
             fullWidth
             variant="outline"
-            onClick={submitButtonStatus[currentStatus]?.onClick}
+            onClick={handleChangeState}
             loading={changingStatus}
           >
             {submitButtonStatus[currentStatus]?.buttonLabel}
           </Button>
         )}
-        <Button
-          disabled={!canChangeStatus}
-          fullWidth
-          form="createEventForm"
-          type="submit"
-          loading={submiting}
-        >
-          {buttonText}
-        </Button>
+        {(isDraft || isPublished) && (
+          <Button
+            fullWidth
+            form="createEventForm"
+            type="submit"
+            loading={submiting}
+          >
+            {buttonText}
+          </Button>
+        )}
       </Flex>
     </Box>
   )

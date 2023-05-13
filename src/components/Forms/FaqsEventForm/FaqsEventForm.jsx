@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Flex } from '@mantine/core'
+import { Flex, Text } from '@mantine/core'
 import FaqForm from './FaqForm'
 import FaqInfo from './FaqInfo'
 
-const FaqsEventForm = ({ formState }) => {
+const FaqsEventForm = ({ formState, isPublished, isDraft }) => {
   const [faqs, setFaqs] = useState(formState.values.faqs)
+  const canEdit = isPublished || isDraft
 
   const handleAddFaq = (speakInfo) => {
     setFaqs((prevState) => [...prevState, speakInfo])
@@ -20,14 +21,19 @@ const FaqsEventForm = ({ formState }) => {
 
   return (
     <Flex gap={14} direction="column">
-      {faqs.map((faq, index) => (
-        <FaqInfo
-          faq={faq}
-          key={index}
-          onDelete={() => handleDeleteFaq(index)}
-        />
-      ))}
-      <FaqForm onSubmit={handleAddFaq} />
+      {!faqs.length && !canEdit ? (
+        <Text>No hay Faqs</Text>
+      ) : (
+        faqs.map((faq, index) => (
+          <FaqInfo
+            faq={faq}
+            key={index}
+            onDelete={() => handleDeleteFaq(index)}
+            canEdit={canEdit}
+          />
+        ))
+      )}
+      {canEdit && <FaqForm onSubmit={handleAddFaq} />}
     </Flex>
   )
 }

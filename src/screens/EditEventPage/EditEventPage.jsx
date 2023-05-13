@@ -11,7 +11,6 @@ const EditEventPage = () => {
   const navigate = useNavigate()
   const [event, setEvent] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [canEdit, setCanEdit] = useState(true)
   const { eventId } = useParams()
 
   const getEvent = async () => {
@@ -38,7 +37,6 @@ const EditEventPage = () => {
           },
           status,
         }
-        setCanEdit(status === 'DRAFT')
         setEvent(formattedData)
         setIsLoading(false)
       },
@@ -80,7 +78,7 @@ const EditEventPage = () => {
       images,
       faqs,
       ...location,
-      ...(canEdit && { ...data }),
+      ...(status === 'DRAFT' && { ...data }),
     }
 
     apiProvider().editEvent({
@@ -129,11 +127,7 @@ const EditEventPage = () => {
     <>
       <Title>Edición del evento: {event.title}</Title>
       <Space h={24} />
-      <EventForm
-        onSubmit={handleConfirmChanges}
-        initialValues={event}
-        canEdit={canEdit}
-      />
+      <EventForm onSubmit={handleConfirmChanges} initialValues={event} />
     </>
   )
 }
