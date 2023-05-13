@@ -32,11 +32,12 @@ const DEFAULT_FORM_VALUES = {
 
 const EVENT_STATUSES = {
   DRAFT: 'DRAFT',
+  SUSPENDRAFT: 'SUSPENDRAFT',
   PUBLISHED: 'PUBLISHED',
   CANCELED: 'CANCELED',
 }
 
-const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
+const EventForm = ({ initialValues, onSubmit, submiting }) => {
   const [changingStatus, setChangingStatus] = useState(false)
   const formState = useForm({
     initialValues: initialValues || DEFAULT_FORM_VALUES,
@@ -49,12 +50,17 @@ const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
       capacity: capacityValidation,
     },
   })
+
   const [currentStatus, setCurrentStatus] = useState(
     initialValues?.status || EVENT_STATUSES.DRAFT
   )
+
+  const isDraft = currentStatus === 'DRAFT'
+  const isPublished = currentStatus === 'PUBLISHED'
+  const isSuspenDraft = currentStatus === 'SUSPENDRAFT'
+
   const [canChangeStatus, setCanChangeStatus] = useState(
-    currentStatus === EVENT_STATUSES.DRAFT ||
-      currentStatus === EVENT_STATUSES.PUBLISHED
+    isDraft || isPublished || isSuspenDraft
   )
 
   const publishEvent = () => {
@@ -96,6 +102,10 @@ const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
       buttonLabel: 'Publicar evento',
       onClick: publishEvent,
     },
+    SUSPENDRAFT: {
+      buttonLabel: 'Re-Publicar evento',
+      onClick: publishEvent,
+    },
     PUBLISHED: {
       buttonLabel: 'Cancelar evento',
       onClick: cancelEvent,
@@ -110,24 +120,31 @@ const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
         <BasicEventForm
           formState={formState}
           onSubmit={onSubmit}
-          canEdit={canEdit}
+          isDraft={isDraft}
+          isPublished={isPublished}
         />
       ),
     },
     {
       value: 'schedule',
       title: 'Agenda',
-      Form: <ScheduleEventForm formState={formState} canEdit={canEdit} />,
+      Form: <ScheduleEventForm formState={formState} isDraft={isDraft} />,
     },
     {
       value: 'faqs',
       title: 'FAQs',
-      Form: <FaqsEventForm formState={formState} />,
+      Form: (
+        <FaqsEventForm
+          formState={formState}
+          isDraft={isDraft}
+          isPublished={isPublished}
+        />
+      ),
     },
   ]
 
   const buttonText = initialValues
-    ? !canChangeStatus
+    ? !isDraft && !isPublished
       ? 'Ya no se pueden realizar cambios'
       : 'Guardar cambios '
     : 'Crear evento'
@@ -156,15 +173,16 @@ const EventForm = ({ initialValues, onSubmit, submiting, canEdit = true }) => {
             {submitButtonStatus[currentStatus]?.buttonLabel}
           </Button>
         )}
-        <Button
-          disabled={!canChangeStatus}
-          fullWidth
-          form="createEventForm"
-          type="submit"
-          loading={submiting}
-        >
-          {buttonText}
-        </Button>
+        {(isDraft || isPublished) && (
+          <Button
+            fullWidth
+            form="createEventForm"
+            type="submit"
+            loading={submiting}
+          >
+            {buttonText}
+          </Button>
+        )}
       </Flex>
     </Box>
   )

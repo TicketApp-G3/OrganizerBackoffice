@@ -7,7 +7,7 @@ import CustomDropzone from '../CustomDropzone/CustomDropzone'
 
 const INPUT_SIZE = 'sm'
 
-const BasicEventForm = ({ formState, onSubmit, canEdit }) => {
+const BasicEventForm = ({ formState, onSubmit, isDraft, isPublished }) => {
   const theme = useMantineTheme()
 
   const handleSubmit = (errors, values) => {
@@ -31,7 +31,7 @@ const BasicEventForm = ({ formState, onSubmit, canEdit }) => {
           label="Título"
           placeholder="Ingrese el título del evento"
           size={INPUT_SIZE}
-          disabled={!canEdit}
+          disabled={!isDraft}
           {...formState.getInputProps('title')}
         />
 
@@ -39,6 +39,7 @@ const BasicEventForm = ({ formState, onSubmit, canEdit }) => {
           withAsterisk
           label="Ubicación"
           placeholder="Seleccione la ubicación"
+          disabled={!isDraft && !isPublished}
           size={INPUT_SIZE}
           {...formState.getInputProps('location')}
           value={formState.values.location.address}
@@ -61,7 +62,7 @@ const BasicEventForm = ({ formState, onSubmit, canEdit }) => {
               { value: 'STAND_UP', label: 'Stand Up' },
             ]}
             size={INPUT_SIZE}
-            disabled={!canEdit}
+            disabled={!isDraft}
             {...formState.getInputProps('type')}
           />
 
@@ -71,6 +72,7 @@ const BasicEventForm = ({ formState, onSubmit, canEdit }) => {
             label="Cantidad de entradas"
             type="number"
             placeholder="Ingrese una cantidad"
+            disabled={!isDraft && !isPublished}
             size={INPUT_SIZE}
             {...formState.getInputProps('capacity')}
           />
@@ -90,6 +92,7 @@ const BasicEventForm = ({ formState, onSubmit, canEdit }) => {
             hideOutsideDates
             minDate={new Date()}
             maxDate={formState.values.timeTo}
+            disabled={!isDraft && !isPublished}
             labelProps={{ size: 14 }}
             size="xs"
             {...formState.getInputProps('timeFrom')}
@@ -103,6 +106,7 @@ const BasicEventForm = ({ formState, onSubmit, canEdit }) => {
             locale="es"
             hideOutsideDates
             minDate={formState.values.timeFrom || new Date()}
+            disabled={!isDraft && !isPublished}
             labelProps={{ size: 14 }}
             size="xs"
             {...formState.getInputProps('timeTo')}
@@ -111,11 +115,14 @@ const BasicEventForm = ({ formState, onSubmit, canEdit }) => {
 
         <CustomRichTextEditor
           label="Descripción"
+          disabled={!isDraft && !isPublished}
           size={INPUT_SIZE}
           {...formState.getInputProps('description')}
         />
 
         <CustomDropzone
+          label="Imágenes del evento"
+          disabled={!isDraft && !isPublished}
           initialImages={formState.values.images}
           {...formState.getInputProps('images')}
         />

@@ -3,7 +3,7 @@ import React from 'react'
 import DeleteButton from '../../DeleteButton/DeleteButton'
 import './FaqInfoStyles.css'
 
-const FaqInfo = ({ faq, onDelete }) => {
+const FaqInfo = ({ faq, onDelete, canEdit }) => {
   const theme = useMantineTheme()
 
   const { question, answer } = faq
@@ -13,7 +13,7 @@ const FaqInfo = ({ faq, onDelete }) => {
       className="formContainer"
       style={{ borderColor: theme.colors.gray[5] }}
     >
-      <DeleteButton onClick={onDelete} />
+      {canEdit && <DeleteButton onClick={onDelete} />}
       <Text fw="bold">{question}</Text>
       <Text>{answer}</Text>
     </div>

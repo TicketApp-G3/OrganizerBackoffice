@@ -6,6 +6,7 @@ const PlacesSearchBox = ({
   onChange,
   withAsterisk,
   placeholder,
+  disabled,
   size,
   error,
   value,
@@ -29,6 +30,7 @@ const PlacesSearchBox = ({
       <TextInput
         withAsterisk={withAsterisk}
         label={label}
+        disabled={disabled}
         defaultValue={value}
         placeholder={placeholder}
         onChange={handleSearch}
