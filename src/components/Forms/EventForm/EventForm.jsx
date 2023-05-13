@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import './EventFormStyles.css'
-import { Accordion, Box, Button, Flex } from '@mantine/core'
+import { Accordion, Box, Button, Flex, Text } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { notifications } from '@mantine/notifications'
+import { modals } from '@mantine/modals'
+import { useNavigate } from 'react-router'
 import BasicEventForm from '../BasicEventForm'
 import ScheduleEventForm from '../ScheduleEventForm/ScheduleEventForm'
 import FaqsEventForm from '../FaqsEventForm/FaqsEventForm'
@@ -39,6 +41,7 @@ const EVENT_STATUSES = {
 
 const EventForm = ({ initialValues, onSubmit, submiting }) => {
   const [changingStatus, setChangingStatus] = useState(false)
+  const navigate = useNavigate()
   const formState = useForm({
     initialValues: initialValues || DEFAULT_FORM_VALUES,
     validate: {
@@ -99,17 +102,36 @@ const EventForm = ({ initialValues, onSubmit, submiting }) => {
 
   const submitButtonStatus = {
     DRAFT: {
-      buttonLabel: 'Publicar evento',
+      buttonLabel: 'Publicar el evento',
+      modalTitle: 'Confirmación de publicación',
+      modalText: '¿Seguro que desea publicar el evento?',
       onClick: publishEvent,
     },
     SUSPENDRAFT: {
-      buttonLabel: 'Re-Publicar evento',
+      buttonLabel: 'Re-Publicar el evento',
+      modalTitle: 'Confirmación de re publicación',
+      modalText: '¿Seguro que desea re publicar el evento?',
       onClick: publishEvent,
     },
     PUBLISHED: {
-      buttonLabel: 'Cancelar evento',
+      buttonLabel: 'Cancelar el evento',
+      modalTitle: 'Confirmación de cancelación',
+      modalText: '¿Seguro que desea cancelar el evento?',
       onClick: cancelEvent,
     },
+  }
+
+  const handleChangeState = () => {
+    const { onClick, modalTitle, modalText } = submitButtonStatus[currentStatus]
+    modals.openConfirmModal({
+      title: modalTitle,
+      children: <Text size="sm">{modalText}</Text>,
+      labels: { confirm: 'Confirmar', cancel: 'Cancelar' },
+      onConfirm: () => {
+        onClick()
+        navigate(`/dashboard/myEvents`)
+      },
+    })
   }
 
   const sections = [
@@ -167,7 +189,7 @@ const EventForm = ({ initialValues, onSubmit, submiting }) => {
           <Button
             fullWidth
             variant="outline"
-            onClick={submitButtonStatus[currentStatus]?.onClick}
+            onClick={handleChangeState}
             loading={changingStatus}
           >
             {submitButtonStatus[currentStatus]?.buttonLabel}
