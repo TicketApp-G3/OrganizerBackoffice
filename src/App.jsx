@@ -2,6 +2,7 @@ import { ColorSchemeProvider, MantineProvider } from '@mantine/core'
 import { useColorScheme, useLocalStorage } from '@mantine/hooks'
 import { useEffect } from 'react'
 import { Notifications } from '@mantine/notifications'
+import { ModalsProvider } from '@mantine/modals'
 import { AuthProvider } from './contexts/AuthProvider'
 import AppRouter from './routers/AppRouter'
 import { customTheme } from './themes/customTheme'
@@ -29,10 +30,12 @@ const App = () => {
         withNormalizeCSS
         theme={{ colorScheme, ...customTheme }}
       >
-        <Notifications />
-        <AuthProvider>
-          <AppRouter />
-        </AuthProvider>
+        <ModalsProvider>
+          <Notifications />
+          <AuthProvider>
+            <AppRouter />
+          </AuthProvider>
+        </ModalsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   )
