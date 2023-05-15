@@ -29,7 +29,7 @@ class EventController {
   public async getOwnEvents(req: Request): Promise<any> {
     await validateUserStatus(req)
     const response = await axios.get(eventsUrl, {
-      params: { userId: req.query.userId },
+      params: { ownerId: req.query.ownerId },
     })
     return response.data
   }

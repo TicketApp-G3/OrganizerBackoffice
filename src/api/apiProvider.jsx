@@ -3,6 +3,7 @@ import axios from 'axios'
 
 const apiProvider = () => {
   const baseURL = 'http://localhost:8082'
+  const token = localStorage.getItem('token')
 
   const request = async ({
     method,
@@ -17,6 +18,7 @@ const apiProvider = () => {
         method,
         url: `${baseURL}${url}`,
         data: body,
+        headers: { Authorization: token },
         ...options,
       })
       onSuccess(data)
@@ -54,6 +56,7 @@ const apiProvider = () => {
   }
 
   const login = async ({ userData, onSuccess, onFailure }) => {
+    localStorage.setItem('token', `Bearer ${userData.userId}`)
     request({
       method: 'post',
       url: '/users',
@@ -69,6 +72,7 @@ const apiProvider = () => {
       url: `/events/own?ownerId=${userId}`,
       onSuccess,
       onFailure,
+      options: {},
     })
   }
 
