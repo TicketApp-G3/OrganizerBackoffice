@@ -2,6 +2,7 @@ import { Request } from '@shared'
 import pinoLogger from 'pino'
 import axios from 'axios'
 import { eventsUrl } from '@shared/services.constants'
+import { validateUserStatus } from '@shared/middleware/validate-user-status.middleware'
 
 class EventController {
   private logger
@@ -11,11 +12,13 @@ class EventController {
   }
 
   public async createEvent(req: Request): Promise<any> {
+    await validateUserStatus(req)
     const response = await axios.post(eventsUrl, req.body)
     return response.data
   }
 
   public async updateEvent(req: Request): Promise<any> {
+    await validateUserStatus(req)
     const response = await axios.patch(
       `${eventsUrl}/${req.params.eventId}`,
       req.body
@@ -24,6 +27,7 @@ class EventController {
   }
 
   public async getOwnEvents(req: Request): Promise<any> {
+    await validateUserStatus(req)
     const response = await axios.get(eventsUrl, {
       params: { userId: req.query.userId },
     })
@@ -31,11 +35,13 @@ class EventController {
   }
 
   public async getEventById(req: Request): Promise<any> {
+    await validateUserStatus(req)
     const response = await axios.get(`${eventsUrl}/${req.params.eventId}`)
     return response.data
   }
 
   public async publishEvent(req: Request): Promise<any> {
+    await validateUserStatus(req)
     const response = await axios.patch(`${eventsUrl}/${req.params.eventId}`, {
       status: 'PUBLISHED',
     })
@@ -43,6 +49,7 @@ class EventController {
   }
 
   public async cancelEvent(req: Request): Promise<any> {
+    await validateUserStatus(req)
     const response = await axios.patch(`${eventsUrl}/${req.params.eventId}`, {
       status: 'CANCELLED',
     })
@@ -50,6 +57,7 @@ class EventController {
   }
 
   public async deleteEvent(req: Request): Promise<any> {
+    await validateUserStatus(req)
     const response = await axios.patch(`${eventsUrl}/${req.params.eventId}`, {
       status: 'DELETED',
     })

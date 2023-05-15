@@ -30,7 +30,11 @@ export function registerHandler<T = Record<string, unknown>>(
         res.status(statusCode).json(snakeResObject)
       }
     } catch (error) {
-      res.status(error.response.status).send(error.response.data)
+      if (error.response) {
+        res.status(error.response.status).send(error.response.data)
+      } else {
+        next(error)
+      }
     }
   }
 }
