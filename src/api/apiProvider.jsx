@@ -1,3 +1,4 @@
+import { notifications } from '@mantine/notifications'
 import axios from 'axios'
 
 const apiProvider = () => {
@@ -21,6 +22,12 @@ const apiProvider = () => {
       onSuccess(data)
     } catch (error) {
       const { status, statusText } = error.response
+      if (status === 401) {
+        notifications.show({
+          title: 'Esta cuenta esta bloqueada',
+          color: 'red',
+        })
+      }
       onFailure({ status, statusText })
       console.error('Error Code: ', status, ' Message: ', statusText)
     }
