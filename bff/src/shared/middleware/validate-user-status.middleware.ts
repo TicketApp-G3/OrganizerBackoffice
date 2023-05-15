@@ -8,8 +8,10 @@ export async function validateUserStatus(req: Request) {
   if (!userId) {
     throw new UnauthorizedException('Missing auth token')
   }
-  const response = await axios.get(`${usersUrl}//organizers/${userId}/status`)
-  if (response.status === 200 && response.data.isBlocked) {
-    throw new UnauthorizedException('user blocked')
-  }
+  try {
+    const response = await axios.get(`${usersUrl}//organizers/${userId}/status`)
+    if (response.status === 200 && response.data.isBlocked) {
+      throw new UnauthorizedException('user blocked')
+    }
+  } catch (error) {}
 }
