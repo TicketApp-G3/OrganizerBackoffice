@@ -67,6 +67,8 @@ const EditEventPage = () => {
       count,
       faqs,
       images,
+      createdAt,
+      ownerId,
       ...data
     } = values
 
