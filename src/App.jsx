@@ -12,7 +12,7 @@ const App = () => {
   const preferredColorScheme = useColorScheme()
 
   useEffect(() => {
-    if (import.meta.env.VITE_ENV === 'local') apiProvider().health()
+    apiProvider().health()
   }, [])
 
   const [colorScheme, setColorScheme] = useLocalStorage(preferredColorScheme)
