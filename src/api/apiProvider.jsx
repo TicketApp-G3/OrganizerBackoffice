@@ -2,7 +2,6 @@ import { notifications } from '@mantine/notifications'
 import axios from 'axios'
 
 const apiProvider = () => {
-  const baseURL = 'http://localhost:8082'
   const token = localStorage.getItem('token')
 
   const request = async ({
@@ -16,7 +15,7 @@ const apiProvider = () => {
     try {
       const { data } = await axios({
         method,
-        url: `${baseURL}${url}`,
+        url: `${import.meta.env.VITE_BFF_BASE_URL}${url}`,
         data: body,
         headers: { Authorization: token },
         ...options,
