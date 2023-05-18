@@ -17,7 +17,7 @@ const apiProvider = () => {
         method,
         url: `${import.meta.env.VITE_BFF_BASE_URL}${url}`,
         data: body,
-        headers: { Authorization: token },
+        headers: { Authorization: token, 'ngrok-skip-browser-warning': true },
         ...options,
       })
       onSuccess(data)
