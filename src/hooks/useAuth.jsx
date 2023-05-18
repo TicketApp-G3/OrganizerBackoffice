@@ -43,9 +43,7 @@ export const useAuth = () => {
 
     await auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log('probnaddasdas')
         const localUser = localStorage.getItem('loggedUser')
-        console.log('user: ', localUser)
         setloggedUser(JSON.parse(localUser))
         setIsCheckingAuth(false)
       } else {
