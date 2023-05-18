@@ -3,11 +3,14 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import DashboardLayout from './DashboardLayout'
 import { AuthContext } from '../contexts/AuthProvider'
 import LoginScreen from '../screens/LoginScreen/LoginScreen'
+import LoadingScreen from '../screens/LoadingScreen/LoadingScreen'
 
 const AppRouter = () => {
-  const { loggedUser } = useContext(AuthContext)
+  const { isCheckingAuth, loggedUser } = useContext(AuthContext)
 
-  return (
+  return isCheckingAuth ? (
+    <LoadingScreen />
+  ) : (
     <BrowserRouter>
       <Routes>
         {!loggedUser ? (

@@ -11,6 +11,7 @@ import apiProvider from '../api/apiProvider'
 
 export const useAuth = () => {
   const [loggedUser, setloggedUser] = useState()
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true)
 
   const getUserData = (userData) => {
     const { profile } = getAdditionalUserInfo(userData)
@@ -38,12 +39,16 @@ export const useAuth = () => {
   }
 
   const checkUserIsAuth = useCallback(async () => {
+    setIsCheckingAuth(true)
+
     await auth.onAuthStateChanged((user) => {
       if (user) {
         const localUser = localStorage.getItem('loggedUser')
         setloggedUser(JSON.parse(localUser))
+        setIsCheckingAuth(false)
       } else {
         setloggedUser(null)
+        setIsCheckingAuth(false)
       }
     })
   }, [auth])
@@ -81,5 +86,5 @@ export const useAuth = () => {
 
   useEffect(() => checkUserIsAuth, [checkUserIsAuth])
 
-  return { loggedUser, login, logout }
+  return { loggedUser, isCheckingAuth, login, logout }
 }
