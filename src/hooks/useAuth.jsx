@@ -12,7 +12,6 @@ import apiProvider from '../api/apiProvider'
 export const useAuth = () => {
   const [loggedUser, setloggedUser] = useState()
   const [isCheckingAuth, setIsCheckingAuth] = useState(true)
-  console.log('useAuth')
 
   const getUserData = (userData) => {
     const { profile } = getAdditionalUserInfo(userData)
@@ -29,26 +28,22 @@ export const useAuth = () => {
       profileImage: profile.picture,
     }
 
-    apiProvider().login({
-      userData: formattedUserData,
-      onSuccess: () => {
-        localStorage.setItem('loggedUser', JSON.stringify(pageUserDate))
-        setloggedUser(pageUserDate)
-      },
-      onFailure: () => setloggedUser(null),
-    })
+    // apiProvider().login({
+    //   userData: formattedUserData,
+    //   onSuccess: () => {
+    //     localStorage.setItem('loggedUser', JSON.stringify(pageUserDate))
+    //     setloggedUser(pageUserDate)
+    //   },
+    //   onFailure: () => setloggedUser(null),
+    // })
   }
 
   const checkUserIsAuth = useCallback(async () => {
-    console.log('asdasdasdasd asdas dsad')
     setIsCheckingAuth(true)
-    console.log('checkuserisauth')
 
     await auth.onAuthStateChanged((user) => {
-      console.log('Usuario de firebase: ', user)
       if (user) {
         const localUser = localStorage.getItem('loggedUser')
-        console.log('Usuario del localstorage: ', localUser)
         setloggedUser(JSON.parse(localUser))
         setIsCheckingAuth(false)
       } else {

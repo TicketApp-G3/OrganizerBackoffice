@@ -20,7 +20,6 @@ const App = () => {
   const toggleColorScheme = (value) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
 
-  console.log(localStorage)
   return (
     <ColorSchemeProvider
       colorScheme={colorScheme}
