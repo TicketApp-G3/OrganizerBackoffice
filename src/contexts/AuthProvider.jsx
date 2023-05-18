@@ -4,11 +4,10 @@ import { useAuth } from '../hooks/useAuth'
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const { loggedUser, isCheckingAuth, login, logout } = useAuth()
+  const { loggedUser, login, logout } = useAuth()
 
   const contextValue = useMemo(() => ({
     loggedUser,
-    isCheckingAuth,
     login,
     logout,
   }))

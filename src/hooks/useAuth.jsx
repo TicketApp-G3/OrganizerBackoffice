@@ -11,11 +11,10 @@ import apiProvider from '../api/apiProvider'
 
 export const useAuth = () => {
   const [loggedUser, setloggedUser] = useState()
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true)
 
   const getUserData = (userData) => {
     const { profile } = getAdditionalUserInfo(userData)
-    console.log('PROFILE: ', profile)
+
     const formattedUserData = {
       userId: profile.id,
       name: profile.given_name,
@@ -39,16 +38,12 @@ export const useAuth = () => {
   }
 
   const checkUserIsAuth = useCallback(async () => {
-    setIsCheckingAuth(true)
-
     await auth.onAuthStateChanged((user) => {
       if (user) {
         const localUser = localStorage.getItem('loggedUser')
         setloggedUser(JSON.parse(localUser))
-        setIsCheckingAuth(false)
       } else {
         setloggedUser(null)
-        setIsCheckingAuth(false)
       }
     })
   }, [auth])
@@ -86,5 +81,5 @@ export const useAuth = () => {
 
   useEffect(() => checkUserIsAuth, [checkUserIsAuth])
 
-  return { loggedUser, isCheckingAuth, login, logout }
+  return { loggedUser, login, logout }
 }
