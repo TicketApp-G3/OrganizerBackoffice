@@ -15,7 +15,7 @@ export const useAuth = () => {
 
   const getUserData = (userData) => {
     const { profile } = getAdditionalUserInfo(userData)
-
+    console.log('PROFILE: ', profile)
     const formattedUserData = {
       userId: profile.id,
       name: profile.given_name,
@@ -28,14 +28,14 @@ export const useAuth = () => {
       profileImage: profile.picture,
     }
 
-    // apiProvider().login({
-    //   userData: formattedUserData,
-    //   onSuccess: () => {
-    //     localStorage.setItem('loggedUser', JSON.stringify(pageUserDate))
-    //     setloggedUser(pageUserDate)
-    //   },
-    //   onFailure: () => setloggedUser(null),
-    // })
+    apiProvider().login({
+      userData: formattedUserData,
+      onSuccess: () => {
+        localStorage.setItem('loggedUser', JSON.stringify(pageUserDate))
+        setloggedUser(pageUserDate)
+      },
+      onFailure: () => setloggedUser(null),
+    })
   }
 
   const checkUserIsAuth = useCallback(async () => {
