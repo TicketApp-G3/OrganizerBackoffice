@@ -6,6 +6,8 @@ export const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
   console.log('Probando')
   const { loggedUser, isCheckingAuth, login, logout } = useAuth()
+  console.log(loggedUser)
+
   const contextValue = useMemo(() => ({
     loggedUser,
     isCheckingAuth,
