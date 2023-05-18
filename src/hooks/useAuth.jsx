@@ -12,24 +12,15 @@ import apiProvider from '../api/apiProvider'
 export const useAuth = () => {
   const [loggedUser, setloggedUser] = useState()
   const [isCheckingAuth, setIsCheckingAuth] = useState(true)
-  console.log('useAuth 1: ', loggedUser, isCheckingAuth)
 
   const getUserData = (userData) => {
-    console.log('useAuth 2: ')
     const { profile } = getAdditionalUserInfo(userData)
-    console.log('useAuth 3: ', profile)
 
-    // const formattedUserData = {
-    //   userId: profile.id,
-    //   name: profile.given_name,
-    //   lastName: profile.family_name,
-    //   email: profile.email,
-    // }
     const formattedUserData = {
-      userId: '232323',
-      name: 'fer',
-      lastName: 'waddasda',
-      email: 'feeerr@gmail.com',
+      userId: profile.id,
+      name: profile.given_name,
+      lastName: profile.family_name,
+      email: profile.email,
     }
 
     const pageUserDate = {

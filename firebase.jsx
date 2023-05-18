@@ -2,8 +2,6 @@ import { initializeApp } from 'firebase/app'
 import { getStorage } from 'firebase/storage'
 import { getAuth } from 'firebase/auth'
 
-console.log('API KEY: ', import.meta.env.VITE_FIREBASE_API_KEY)
-
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: 'ticketapp-fiuba.firebaseapp.com',
@@ -14,9 +12,6 @@ const firebaseConfig = {
   measurementId: 'G-CSK47J9MKW',
 }
 
-console.log('config: ', firebaseConfig)
 export const app = initializeApp(firebaseConfig)
-console.log('app: ', app)
 export const storage = getStorage()
 export const auth = getAuth(app)
-console.log('auth: ', auth)
