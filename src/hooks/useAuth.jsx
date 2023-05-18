@@ -42,8 +42,10 @@ export const useAuth = () => {
     setIsCheckingAuth(true)
 
     await auth.onAuthStateChanged((user) => {
+      console.log('Usuario de firebase: ', user)
       if (user) {
         const localUser = localStorage.getItem('loggedUser')
+        console.log('Usuario del localstorage: ', localUser)
         setloggedUser(JSON.parse(localUser))
         setIsCheckingAuth(false)
       } else {
