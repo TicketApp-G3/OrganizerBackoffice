@@ -19,11 +19,17 @@ export const useAuth = () => {
     const { profile } = getAdditionalUserInfo(userData)
     console.log('useAuth 3: ', profile)
 
+    // const formattedUserData = {
+    //   userId: profile.id,
+    //   name: profile.given_name,
+    //   lastName: profile.family_name,
+    //   email: profile.email,
+    // }
     const formattedUserData = {
-      userId: profile.id,
-      name: profile.given_name,
-      lastName: profile.family_name,
-      email: profile.email,
+      userId: '232323',
+      name: 'fer',
+      lastName: 'waddasda',
+      email: 'feeerr@gmail.com',
     }
 
     const pageUserDate = {
