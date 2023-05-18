@@ -40,7 +40,7 @@ export const useAuth = () => {
 
   const checkUserIsAuth = async () => {
     setIsCheckingAuth(true)
-
+    console.log('checkuserisauth')
     await auth.onAuthStateChanged((user) => {
       console.log('Usuario de firebase: ', user)
       if (user) {
