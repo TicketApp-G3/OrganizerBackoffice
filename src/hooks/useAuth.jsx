@@ -4,14 +4,13 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth'
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { notifications } from '@mantine/notifications'
 import { auth } from '../../firebase'
 import apiProvider from '../api/apiProvider'
 
 export const useAuth = () => {
   const [loggedUser, setloggedUser] = useState()
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true)
 
   const getUserData = (userData) => {
     const { profile } = getAdditionalUserInfo(userData)
@@ -37,21 +36,6 @@ export const useAuth = () => {
       onFailure: () => setloggedUser(null),
     })
   }
-
-  const checkUserIsAuth = useCallback(async () => {
-    setIsCheckingAuth(true)
-
-    await auth.onAuthStateChanged((user) => {
-      if (user) {
-        const localUser = localStorage.getItem('loggedUser')
-        setloggedUser(JSON.parse(localUser))
-        setIsCheckingAuth(false)
-      } else {
-        setloggedUser(null)
-        setIsCheckingAuth(false)
-      }
-    })
-  }, [auth])
 
   const login = async () => {
     const googleProvider = new GoogleAuthProvider()
@@ -84,7 +68,5 @@ export const useAuth = () => {
     }
   }
 
-  useEffect(() => checkUserIsAuth, [checkUserIsAuth])
-
-  return { loggedUser, isCheckingAuth, login, logout }
+  return { loggedUser, setloggedUser, login, logout }
 }
