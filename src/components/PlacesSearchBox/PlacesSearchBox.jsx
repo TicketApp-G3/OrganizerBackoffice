@@ -14,8 +14,11 @@ const PlacesSearchBox = ({
 }) => {
   const { latitude, longitude, address } = value
   const [location, setLocation] = useState({
-    lat: latitude || -34.603722,
-    lng: longitude || -58.381592,
+    latLng: {
+      lat: latitude || -34.603722,
+      lng: longitude || -58.381592,
+    },
+    address,
   })
 
   const { isLoaded } = useJsApiLoader({
@@ -32,7 +35,7 @@ const PlacesSearchBox = ({
       const formatAddress = `${place[0].name}, ${place[0].vicinity}`
 
       const latLng = new window.google.maps.LatLng(lat, lng)
-      setLocation(latLng)
+      setLocation({ latLng, address: formatAddress })
 
       onChange({
         latitude: lat,
@@ -48,7 +51,7 @@ const PlacesSearchBox = ({
         withAsterisk={withAsterisk}
         label={label}
         disabled={disabled}
-        defaultValue={address}
+        defaultValue={location.address}
         placeholder={placeholder}
         onChange={handleSearch}
         size={size}
@@ -58,7 +61,7 @@ const PlacesSearchBox = ({
         <Loader />
       ) : (
         <GoogleMap
-          center={location}
+          center={location.latLng}
           zoom={16}
           mapContainerStyle={{ margin: '20px 0', width: '100%', height: 250 }}
           options={{
@@ -69,7 +72,7 @@ const PlacesSearchBox = ({
             draggable: false,
           }}
         >
-          <MarkerF position={location} />
+          <MarkerF position={location.latLng} />
         </GoogleMap>
       )}
     </div>
