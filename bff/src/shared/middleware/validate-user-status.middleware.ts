@@ -12,8 +12,7 @@ export async function validateUserStatus(req: Request) {
   try {
     response = await axios.get(`${usersUrl}//organizers/${userId}/status`)
   } catch (error) {}
-  console.log(response.data)
-  if (response.status === 200 && response.data.isBlocked) {
+  if (response?.status === 200 && response.data.isBlocked) {
     throw new UnauthorizedException('user blocked')
   }
 }
