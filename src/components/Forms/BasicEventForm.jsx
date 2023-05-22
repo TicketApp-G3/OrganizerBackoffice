@@ -42,7 +42,7 @@ const BasicEventForm = ({ formState, onSubmit, isDraft, isPublished }) => {
           disabled={!isDraft && !isPublished}
           size={INPUT_SIZE}
           {...formState.getInputProps('location')}
-          value={formState.values.location.address}
+          value={formState.values.location}
         />
 
         <Flex

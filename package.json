@@ -25,6 +25,7 @@
     "@mantine/prism": "^6.0.5",
     "@mantine/spotlight": "^6.0.5",
     "@mantine/tiptap": "^6.0.5",
+    "@react-google-maps/api": "^2.18.1",
     "@tabler/icons-react": "^2.13.1",
     "@tiptap/extension-highlight": "^2.0.1",
     "@tiptap/extension-link": "^2.0.1",
