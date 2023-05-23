@@ -150,7 +150,13 @@ const EventForm = ({ initialValues, onSubmit, submiting }) => {
     {
       value: 'schedule',
       title: 'Agenda',
-      Form: <ScheduleEventForm formState={formState} isDraft={isDraft} />,
+      Form: (
+        <ScheduleEventForm
+          formState={formState}
+          isDraft={isDraft}
+          isPublished={isPublished}
+        />
+      ),
     },
     {
       value: 'faqs',

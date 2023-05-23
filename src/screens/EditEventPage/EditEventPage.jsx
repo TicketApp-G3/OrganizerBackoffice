@@ -69,6 +69,7 @@ const EditEventPage = () => {
       images,
       createdAt,
       ownerId,
+      schedule,
       ...data
     } = values
 
@@ -79,6 +80,7 @@ const EditEventPage = () => {
       description,
       images,
       faqs,
+      schedule,
       ...location,
       ...(status === 'DRAFT' && { ...data }),
     }
