@@ -25,7 +25,8 @@ const apiProvider = () => {
       const { status, statusText } = error.response
       if (status === 401) {
         notifications.show({
-          title: 'Esta cuenta esta bloqueada',
+          title:
+            'Esta cuenta esta bloqueada, por favor contactese con ticketapp@support.com',
           color: 'red',
         })
       }
