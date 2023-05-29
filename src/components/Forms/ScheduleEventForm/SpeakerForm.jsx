@@ -20,6 +20,7 @@ const SpeakerForm = ({ onSubmit }) => {
       description: '',
       timeFrom: '',
       timeTo: '',
+      image: ' https://image.com',
     },
   })
 
